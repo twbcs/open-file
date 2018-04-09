@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @author.name %>
+</p>
+
+<p>
+  <strong>Dir name:</strong>
+  <%= @author.dir_name %>
+</p>
+
+<div class="image">
+  <%= image_tag @author.image %>
+</div>
+
+<%= link_to 'Edit', edit_author_path(@author) %> |
+<%= link_to 'Back', authors_path %>
+<p></p>
+<%
+begin
+  Dir.chdir("#{FILE_DIR}/#{@author.dir_name}")
+rescue => ex
+  Dir.chdir(FILE_DIR)
+end
+
+unless Dir.pwd == FILE_DIR %>
+  <% Dir.children(Dir.pwd).each do |file| %>
+    <%= file %>
+    <input type="text" name="" value='open -a Simple\ Comic <%= "#{FILE_DIR}/#{@author.dir_name}/#{file.gsub(/\s/, '\ ') }" %>' class='hide' id='cc'>
+    <button type="button" name="button" onclick="copylink('cc')">copy</button>
+  <% end %>
+<% end %>
+
+<script type="text/javascript">
+function copylink(id) {
+  /* Get the text field */
+  var copyText = document.getElementById(id);
+  copyText.className = '';
+
+  /* Select the text field */
+  copyText.select();
+
+  /* Copy the text inside the text field */
+  document.execCommand("Copy");
+  copyText.className = 'hide';
+}
+</script>
