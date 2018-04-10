@@ -38,7 +38,9 @@
         <textarea name="name" rows="8" cols="80" class='hide' id='file_<%= index%>'>
 osascript -e 'tell app "Simple Comic" to close front window'
 osascript -e 'quit app "/Applications/Simple Comic.app"'
-open -a Simple\ Comic <%= "#{FILE_DIR}/#{@author.dir_name}/#{file.gsub(/\s/, '\ ') }" %>
+osascript -e 'tell application "Simple Comic"
+  open "<%= "#{FILE_DIR}/#{@author.dir_name}/#{file}" %>"
+end tell'
         </textarea>
         <button type="button" name="button" onclick="copylink('file_<%= index%>')" class="btn btn-primary btn-sm">copy</button>
       </div>
