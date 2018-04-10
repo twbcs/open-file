@@ -5,3 +5,35 @@
 .hide {
   display: none;
 }
+
+.tag_list {
+  margin-bottom: 10px;
+  .tag {
+    cursor: pointer;
+  }
+}
+
+.list {
+  display: flex;
+  justify-content:flex-start;
+}
+
+.item {
+  background-color: rgb(196, 241, 113);
+  width: 150px;
+  height: 200px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-left: 5px;
+  overflow: hidden;
+  .name {
+    color: #fff;
+  }
+  .image {
+
+  }
+}
+
+.file {
+  margin-bottom: 5px;
+}

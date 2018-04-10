@@ -1,45 +1,65 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Authors</h1>
+<div class='tag_list'>
+  <% Gutentag::Tag.all.each do |t| %>
+    <%= link_to t.name, authors_path(tag_name: t.name), class: "badge badge-primary" %>
+  <% end %>
+</div>
+<div class="list">
+  <% @authors.each do |author|
+    begin
+      Dir.chdir("#{FILE_DIR}/#{author.dir_name}")
+    rescue => ex
+      Dir.chdir(FILE_DIR)
+    end
 
-<% @authors.each do |author|
-  begin
-    Dir.chdir("#{FILE_DIR}/#{author.dir_name}")
-  rescue => ex
-    Dir.chdir(FILE_DIR)
-  end
-
-  unless Dir.pwd == FILE_DIR %>
-    <%= link_to author, class: "btn btn-primary" do %>
-      <div class="list">
-        <div class="name">
-          <%= author.name %>
+    unless Dir.pwd == FILE_DIR %>
+      <%= link_to author do %>
+        <div class="item">
+          <div class="name">
+            <%= author.name %>
+          </div>
+          <div class="image">
+            <%= image_tag author.image.variant(resize: "140x180") if author.image.attached? %>
+          </div>
         </div>
-        <div class="image">
-          <%= image_tag author.image %>
-        </div>
-      </div>
+      <% end %>
     <% end %>
   <% end %>
-<% end %>
+</div>
 
-<table>
+<br>
+
+<table class="table">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Dir name</th>
-      <th colspan="3"></th>
+      <th scope="col">名稱</th>
+      <th scope="col">目錄名稱</th>
+      <th scope="col">存在</th>
+      <th scope="col">圖檔</th>
+      <th scope="col"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @authors.each do |author| %>
+    <%
+      begin
+        Dir.chdir("#{FILE_DIR}/#{author.dir_name}")
+      rescue => ex
+        Dir.chdir(FILE_DIR)
+      end
+    %>
       <tr>
         <td><%= author.name %></td>
         <td><%= author.dir_name %></td>
-        <td><%= link_to 'Show', author %></td>
-        <td><%= link_to 'Edit', edit_author_path(author) %></td>
-        <td><%= link_to 'Destroy', author, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= Dir.pwd == FILE_DIR ? '否' : '是' %></td>
+        <td><%= author.image.attached? ? '是' : '否' %></td>
+        <td>
+          <%= link_to 'Show', author, class: "btn btn-primary btn-sm" %>
+          <%= link_to 'Edit', edit_author_path(author), class: "btn btn-primary btn-sm" %>
+          <%= link_to 'Destroy', author, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-sm" %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -47,4 +67,4 @@
 
 <br>
 
-<%= link_to 'New Author', new_author_path %>
+<%= link_to 'New Author', new_author_path, class: "btn btn-primary btn-sm" %>

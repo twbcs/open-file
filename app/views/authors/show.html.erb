@@ -1,36 +1,50 @@
 <p id="notice"><%= notice %></p>
 
+<%= link_to 'Back', authors_path, class: "btn btn-primary btn-sm" %>
 <p>
-  <strong>Name:</strong>
-  <%= @author.name %>
+  <strong>名稱:</strong>
+  <%= @author.name %> <%= link_to 'Edit', edit_author_path(@author, action: {mode: 'remove'}), class: "btn btn-primary btn-sm" %>
 </p>
 
 <p>
-  <strong>Dir name:</strong>
+  <strong>目錄名稱:</strong>
   <%= @author.dir_name %>
 </p>
 
-<div class="image">
-  <%= image_tag @author.image %>
+<div class='tag_list'>
+  <% @author.tag_names.each do |x| %>
+    <%= link_to x, authors_path(tag_name: x), class: "badge badge-primary" %>
+  <% end %>
 </div>
 
-<%= link_to 'Edit', edit_author_path(@author) %> |
-<%= link_to 'Back', authors_path %>
-<p></p>
-<%
-begin
-  Dir.chdir("#{FILE_DIR}/#{@author.dir_name}")
-rescue => ex
-  Dir.chdir(FILE_DIR)
-end
+<div class="image">
+  <%= image_tag @author.image.variant(resize: "400x800")  if @author.image.attached? %>
+</div>
 
-unless Dir.pwd == FILE_DIR %>
-  <% Dir.children(Dir.pwd).each do |file| %>
-    <%= file %>
-    <input type="text" name="" value='open -a Simple\ Comic <%= "#{FILE_DIR}/#{@author.dir_name}/#{file.gsub(/\s/, '\ ') }" %>' class='hide' id='cc'>
-    <button type="button" name="button" onclick="copylink('cc')">copy</button>
+
+<p></p>
+
+  <%
+  begin
+    Dir.chdir("#{FILE_DIR}/#{@author.dir_name}")
+  rescue => ex
+    Dir.chdir(FILE_DIR)
+  end
+
+  unless Dir.pwd == FILE_DIR %>
+    <% Dir.children(Dir.pwd).each_with_index do |file, index| %>
+      <div class="file">
+        <%= file %>
+        <textarea name="name" rows="8" cols="80" class='hide' id='file_<%= index%>'>
+osascript -e 'tell app "Simple Comic" to close front window'
+osascript -e 'quit app "/Applications/Simple Comic.app"'
+open -a Simple\ Comic <%= "#{FILE_DIR}/#{@author.dir_name}/#{file.gsub(/\s/, '\ ') }" %>
+        </textarea>
+        <button type="button" name="button" onclick="copylink('file_<%= index%>')" class="btn btn-primary btn-sm">copy</button>
+      </div>
+    <% end %>
   <% end %>
-<% end %>
+
 
 <script type="text/javascript">
 function copylink(id) {
