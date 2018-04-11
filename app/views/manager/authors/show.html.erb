@@ -1,9 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Back', authors_path, class: "btn btn-primary btn-sm" %>
+<%= link_to 'Back', manager_authors_path, class: "btn btn-primary btn-sm" %>
 <p>
   <strong>名稱:</strong>
   <%= @author.name %> <%= link_to 'Edit', edit_manager_author_path(@author), class: "btn btn-primary btn-sm" %>
+</p>
+
+<p>
+  <strong>目錄名稱:</strong>
+  <%= @author.dir_name %>
 </p>
 
 <div class='tag_list'>
@@ -13,7 +18,7 @@
 </div>
 
 <div class="image">
-  <%= image_tag @author.image.variant(resize: "400x800")  if @author.image.attached? %>
+  <%= image_tag @author.image.variant(resize: "200x400")  if @author.image.attached? %>
 </div>
 
 <p></p>
