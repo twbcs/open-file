@@ -34,9 +34,9 @@
         <td><%= Dir.pwd == FILE_DIR ? '否' : '是' %></td>
         <td><%= author.image.attached? ? '是' : '否' %></td>
         <td>
-          <%= link_to 'Show', manager_author_path(author), class: "btn btn-primary btn-sm" %>
-          <%= link_to 'Edit', edit_manager_author_path(author), class: "btn btn-primary btn-sm" %>
-          <%= link_to 'Destroy', manager_author_path(author), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-sm" %>
+          <%= link_to '檢視', manager_author_path(author), class: "btn btn-primary btn-sm" %>
+          <%= link_to '修改', edit_manager_author_path(author), class: "btn btn-primary btn-sm" %>
+          <%= link_to '刪除', manager_author_path(author), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-sm" %>
         </td>
       </tr>
     <% end %>

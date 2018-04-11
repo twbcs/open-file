@@ -4,7 +4,9 @@
 
 <div class='tag_list'>
   <% Gutentag::Tag.all.each do |t| %>
-    <%= link_to t.name, authors_path(tag_name: t.name), class: "badge badge-primary" %>
+    <%= link_to authors_path(tag_name: t.name), class: "badge badge-primary" do %>
+      <i class="fas fa-tag"></i><%= t.name %>
+    <% end %>
   <% end %>
 </div>
 <div class="list">
@@ -22,7 +24,7 @@
             <%= author.name %>
           </div>
           <div class="image">
-            <%= image_tag author.image.variant(resize: "140x180") if author.image.attached? %>
+            <%= image_tag author.image.variant(resize: "140x198!") if author.image.attached? %>
           </div>
         </div>
       <% end %>
