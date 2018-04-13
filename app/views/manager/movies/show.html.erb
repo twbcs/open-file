@@ -1,44 +1,45 @@
 
-<%= link_to manager_authors_path, class: "btn btn-primary btn-sm" do %>
+<%= link_to manager_movies_path, class: "btn btn-primary btn-sm" do %>
   <i class="fas fa-long-arrow-alt-left"></i> 返回
 <% end%>
 
 <p class="mt-2">
-  <%= render 'shared/disk', object: @author, dir: AUTHOR_DIR %>
+  <%= render 'shared/disk', object: @movie, dir: MOVIE_DIR %>
   <strong>名稱:</strong>
-  <%= @author.name %> <%= link_to edit_manager_author_path(@author), class: "btn btn-primary btn-sm" do %>
+  <%= @movie.name %> <%= link_to edit_manager_author_path(@movie), class: "btn btn-primary btn-sm" do %>
     <i class="fas fa-edit"></i> 修改
   <% end%>
 </p>
 
 <p>
   <strong>目錄名稱:</strong>
-  <%= @author.dir_name %>
+  <%= @movie.dir_name %>
 </p>
 
 <div class='tag_list'>
-  <% @author.tag_names.each do |x| %>
-    <%= link_to authors_path(tag_name: x), class: "badge badge-primary" do %>
+  <% @movie.tag_names.each do |x| %>
+    <%= link_to movies_path(tag_name: x), class: "badge badge-primary" do %>
       <i class="fas fa-tag"></i> <%= x %>
     <% end%>
   <% end %>
 </div>
 
 <div class="image mb-2">
-  <%= image_tag @author.image.variant(resize: "200x400")  if @author.image.attached? %>
+  <%= image_tag @movie.image.variant(resize: "200x400")  if @movie.image.attached? %>
 </div>
 
   <%
-  unless Dir.pwd == AUTHOR_DIR %>
+  unless Dir.pwd == MOVIE_DIR %>
     <% Dir.children(Dir.pwd).each_with_index do |file, index| %>
-      <% if file[0] != '.' %>
+      <% if File.extname(file).in?(['.mp4', '.mkv', '.avi']) && file[0] != '.' %>
         <div class="file">
           <%= file %>
           <textarea name="name" rows="8" cols="80" class='hide' id='file_<%= index%>'>
-osascript -e 'tell app "Simple Comic" to close front window'
-osascript -e 'quit app "/Applications/Simple Comic.app"'
-osascript -e 'tell application "Simple Comic"
-  open "<%= "#{AUTHOR_DIR}/#{@author.dir_name}/#{file}" %>"
+osascript -e 'tell app "MPlayerX" to close front window'
+osascript -e 'quit app "/Applications/MPlayerX.app"'
+open -a MPlayerX
+osascript -e 'tell application "MPlayerX"
+open "<%= "#{MOVIE_DIR}/#{@movie.dir_name}/#{file}" %>"
 end tell'
           </textarea>
           <button type="button" name="button" onclick="copylink('file_<%= index%>')" class="btn btn-primary btn-sm"><i class="fas fa-copy"></i> copy</button>

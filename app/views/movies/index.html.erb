@@ -1,0 +1,43 @@
+<%= link_to new_manager_movie_path, class: "btn btn-primary btn-sm" do %>
+  <i class="fas fa-plus"></i> 新電影
+<% end%>
+<%= link_to animes_path, class: "btn btn-primary btn-sm right" do %>
+  <i class="fas fa-th"></i> 瀏覽動畫
+<% end%>
+<%= link_to authors_path, class: "btn btn-primary btn-sm right" do %>
+  <i class="fas fa-th"></i> 瀏覽漫畫
+<% end%>
+<%= link_to manager_movies_path, class: "btn btn-primary btn-sm right" do %>
+  <i class="fas fa-align-justify"></i> 管理介面
+<% end%>
+
+<div class='tag_list'>
+  <% @all_names.each do |t| %>
+    <%= link_to manager_movies_path(tag_name: t), class: "badge badge-primary" do %>
+      <i class="fas fa-tag"></i> <%= t %>
+    <% end%>
+  <% end %>
+</div>
+
+<div class="list">
+  <% @movies.each do |movie|
+    begin
+      Dir.chdir("#{MOVIE_DIR}/#{movie.dir_name}")
+    rescue => ex
+      Dir.chdir(MOVIE_DIR)
+    end
+
+    unless Dir.pwd == MOVIE_DIR %>
+      <%= link_to movie do %>
+        <div class="item">
+          <div class="name">
+            <%= movie.name %>
+          </div>
+          <div class="image">
+            <%= image_tag movie.image.variant(resize: "140x198!") if movie.image.attached? %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

@@ -8,6 +8,10 @@ Rails.application.routes.draw do
     get :search, on: :collection
   end
 
+  resources :movies do
+    get :search, on: :collection
+  end
+
   namespace :manager do
     resources :animes do
       get :remove, on: :member
@@ -15,6 +19,11 @@ Rails.application.routes.draw do
     end
 
     resources :authors do
+      get :remove, on: :member
+      get :search, on: :collection
+    end
+
+    resources :movies do
       get :remove, on: :member
       get :search, on: :collection
     end

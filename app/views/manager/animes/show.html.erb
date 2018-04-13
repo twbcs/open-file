@@ -2,12 +2,11 @@
 <%= link_to manager_animes_path, class: "btn btn-primary btn-sm" do %>
   <i class="fas fa-long-arrow-alt-left"></i> 返回
 <% end%>
+
 <p class="mt-2">
-  <%= link_to "#", class: "btn btn-primary btn-sm" do %>
-    <i class="fas fa-folder-open"></i> 開啟
-  <% end %>
+  <%= render 'shared/disk', object: @anime, dir: ANIME_DIR %>
   <strong>名稱:</strong>
-  <%= @anime.name %> <%= link_to edit_manager_anime_path(@anime), class: "btn btn-primary btn-sm" do %>
+  <%= @anime.name %> <%= link_to edit_manager_author_path(@anime), class: "btn btn-primary btn-sm" do %>
     <i class="fas fa-edit"></i> 修改
   <% end%>
 </p>
@@ -25,32 +24,27 @@
   <% end %>
 </div>
 
-<div class="image">
+<div class="image mb-2">
   <%= image_tag @anime.image.variant(resize: "200x400")  if @anime.image.attached? %>
 </div>
 
-<p></p>
-
   <%
-  begin
-    Dir.chdir("#{AINME_DIR}/#{@anime.dir_name}")
-  rescue => ex
-    Dir.chdir(AINME_DIR)
-  end
-
-  unless Dir.pwd == AINME_DIR %>
+  unless Dir.pwd == ANIME_DIR %>
     <% Dir.children(Dir.pwd).each_with_index do |file, index| %>
-      <div class="file">
-        <%= file %>
-        <textarea name="name" rows="8" cols="80" class='hide' id='file_<%= index%>'>
-osascript -e 'tell app "Simple Comic" to close front window'
-osascript -e 'quit app "/Applications/Simple Comic.app"'
-osascript -e 'tell application "Simple Comic"
-  open "<%= "#{AINME_DIR}/#{@anime.dir_name}/#{file}" %>"
+      <% if File.extname(file).in?(['.mp4', '.mkv', '.avi']) && file[0] != '.' %>
+        <div class="file">
+          <%= file %>
+          <textarea name="name" rows="8" cols="80" class='hide' id='file_<%= index%>'>
+osascript -e 'tell app "MPlayerX" to close front window'
+osascript -e 'quit app "/Applications/MPlayerX.app"'
+open -a MPlayerX
+osascript -e 'tell application "MPlayerX"
+open "<%= "#{ANIME_DIR}/#{@anime.dir_name}/#{file}" %>"
 end tell'
-        </textarea>
-        <button type="button" name="button" onclick="copylink('file_<%= index%>')" class="btn btn-primary btn-sm"><i class="fas fa-copy"></i> copy</button>
-      </div>
+          </textarea>
+          <button type="button" name="button" onclick="copylink('file_<%= index%>')" class="btn btn-primary btn-sm"><i class="fas fa-copy"></i> copy</button>
+        </div>
+      <% end %>
     <% end %>
   <% end %>
 

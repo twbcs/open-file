@@ -1,0 +1,28 @@
+<%
+begin
+  Dir.chdir("#{dir}/#{object.dir_name}")
+rescue => ex
+  Dir.chdir(dir)
+end
+
+unless Dir.pwd == dir
+  folders = "#{dir}/#{object.dir_name}".split('/').reverse!
+  folders.pop
+  folders.pop
+  disk = folders.pop
+  string = []
+  folders.each do |folder|
+    string << 'folder "' + folder + '"'
+  end
+  text = string * ' of '
+%>
+  <textarea name="name" rows="8" cols="80" class='hide' id='dir_0'>
+osascript -e 'tell application "Finder"
+if front Finder window exists then
+  activate
+  set target of Finder window 1 to <%= text %> of disk "<%= disk %>"
+end if
+end tell'
+  </textarea>
+  <button type="button" name="button" onclick="copylink('dir_0')" class="btn btn-primary btn-sm"><i class="fas fa-folder-open"></i> 開啟</button>
+<% end %>

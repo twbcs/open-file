@@ -1,0 +1,62 @@
+
+<%= link_to new_manager_movie_path, class: "btn btn-primary btn-sm" do %>
+  <i class="fas fa-plus"></i> 新電影
+<% end%>
+<%= link_to animes_path, class: "btn btn-primary btn-sm right" do %>
+  <i class="fas fa-th"></i> 瀏覽動畫
+<% end%>
+<%= link_to authors_path, class: "btn btn-primary btn-sm right" do %>
+  <i class="fas fa-th"></i> 瀏覽漫畫
+<% end%>
+<%= link_to movies_path, class: "btn btn-primary btn-sm right" do %>
+  <i class="fas fa-th"></i> 瀏覽畫面
+<% end%>
+
+<div class='tag_list'>
+  <% @all_names.each do |t| %>
+    <%= link_to manager_movies_path(tag_name: t), class: "badge badge-primary" do %>
+      <i class="fas fa-tag"></i> <%= t %>
+    <% end%>
+  <% end %>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">名稱</th>
+      <th scope="col">目錄名稱</th>
+      <th scope="col">存在</th>
+      <th scope="col">圖檔</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @movies.each do |movie| %>
+    <%
+      begin
+        Dir.chdir("#{MOVIE_DIR}/#{movie.dir_name}")
+      rescue => ex
+        Dir.chdir(MOVIE_DIR)
+      end
+    %>
+      <tr>
+        <td><%= movie.name %></td>
+        <td><%= movie.dir_name %></td>
+        <td><%= Dir.pwd == MOVIE_DIR ? '否' : '是' %></td>
+        <td><%= movie.image.attached? ? '是' : '否' %></td>
+        <td>
+          <%= link_to manager_movie_path(movie), class: "btn btn-primary btn-sm" do %>
+            <i class="fas fa-eye"></i> 檢視
+          <% end%>
+          <%= link_to edit_manager_movie_path(movie), class: "btn btn-primary btn-sm" do %>
+            <i class="fas fa-edit"></i> 修改
+          <% end%>
+          <%= link_to manager_movie_path(movie), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-sm" do %>
+            <i class="fas fa-trash-alt"></i> 刪除
+          <% end%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

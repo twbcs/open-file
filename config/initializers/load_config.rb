@@ -1,2 +1,3 @@
-ANIME_DIR = '/Users/archer/sim'
-AUTHOR_DIR = '/Users/archer/sim'
+ANIME_DIR = '/Volumes/Storage/sim'
+AUTHOR_DIR = '/Volumes/Storage/sim'
+MOVIE_DIR = '/Volumes/Storage/sim'
