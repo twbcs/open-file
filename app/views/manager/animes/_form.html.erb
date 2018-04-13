@@ -1,10 +1,10 @@
-<%= form_with(model: [:manager, author], local: true) do |form| %>
-  <% if author.errors.any? %>
+<%= form_with(model: [:manager, anime], local: true) do |form| %>
+  <% if anime.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(author.errors.count, "error") %> prohibited this author from being saved:</h2>
+      <h2><%= pluralize(anime.errors.count, "error") %> prohibited this anime from being saved:</h2>
 
       <ul>
-      <% author.errors.full_messages.each do |message| %>
+      <% anime.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -23,22 +23,22 @@
 
   <div class="field">
     <%= form.label :tag_names %>
-    <%= form.text_field :tag_names, name: 'author[tag_names][]', value: author.tag_names, class: 'form-control' %>
+    <%= form.text_field :tag_names, name: 'anime[tag_names][]', value: anime.tag_names, class: 'form-control' %>
   </div>
   <div class='tag_list'>
     <% Gutentag::Tag.all.each do |t| %>
-      <% unless author.tag_names.include? t.name %>
+      <% unless anime.tag_names.include? t.name %>
         <span class="tag active badge badge-primary"><%= t.name %></span>
       <% end %>
     <% end %>
   </div>
 
   <div class="field">
-    <% if author.image.attached? %>
-      <%= link_to remove_manager_author_path(author), class: "btn btn-primary" do %>
+    <% if anime.image.attached? %>
+      <%= link_to remove_manager_anime_path(anime), class: "btn btn-primary" do %>
         <i class="fas fa-trash-alt"></i> 移除檔案
       <% end%>
-      <%= image_tag @author.image.variant(resize: "200x400") %><br>
+      <%= image_tag @anime.image.variant(resize: "200x400") %><br>
     <% end %>
     <%= form.file_field :image %>
   </div>

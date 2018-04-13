@@ -1,0 +1,10 @@
+<h1>Editing Author</h1>
+
+<%= render 'form', anime: @anime %>
+
+<%= link_to manager_anime_path(@anime), class: "btn btn-primary" do %>
+  <i class="fas fa-eye"></i> 檢視
+<% end%> |
+<%= link_to manager_animes_path, class: "btn btn-primary" do %>
+  <i class="fas fa-long-arrow-alt-left"></i> 返回
+<% end%>

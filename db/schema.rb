@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_10_052102) do
+ActiveRecord::Schema.define(version: 2018_04_13_024243) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -33,11 +33,12 @@ ActiveRecord::Schema.define(version: 2018_04_10_052102) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "authors", force: :cascade do |t|
+  create_table "carriers", force: :cascade do |t|
     t.string "name"
     t.string "dir_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "type"
   end
 
   create_table "gutentag_taggings", force: :cascade do |t|

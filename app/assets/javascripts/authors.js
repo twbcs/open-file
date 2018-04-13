@@ -8,4 +8,6 @@ $(document).on('turbolinks:load', function() {
       $(this).removeClass('active').removeClass('badge-primary').addClass('badge-secondary');
     }
   });
+  $('.alert').alert();
+
 })

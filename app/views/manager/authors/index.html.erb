@@ -1,10 +1,19 @@
-<p id="notice"><%= notice %></p>
-<%= link_to '新作者', new_manager_author_path, class: "btn btn-primary btn-sm" %>
-<%= link_to '瀏覽畫面', authors_path, class: "btn btn-primary btn-sm" %>
+
+<%= link_to new_manager_author_path, class: "btn btn-primary btn-sm" do %>
+  <i class="fas fa-plus"></i> 新作者
+<% end%>
+<%= link_to animes_path, class: "btn btn-primary btn-sm right" do %>
+  <i class="fas fa-th"></i> 瀏覽動畫
+<% end%>
+<%= link_to authors_path, class: "btn btn-primary btn-sm right" do %>
+  <i class="fas fa-th"></i> 瀏覽畫面
+<% end%>
 
 <div class='tag_list'>
-  <% Gutentag::Tag.all.each do |t| %>
-    <%= link_to t.name, manager_authors_path(tag_name: t.name), class: "badge badge-primary" %>
+  <% @all_names.each do |t| %>
+    <%= link_to manager_authors_path(tag_name: t), class: "badge badge-primary" do %>
+      <i class="fas fa-tag"></i> <%= t %>
+    <% end%>
   <% end %>
 </div>
 
@@ -23,20 +32,26 @@
     <% @authors.each do |author| %>
     <%
       begin
-        Dir.chdir("#{FILE_DIR}/#{author.dir_name}")
+        Dir.chdir("#{AUTHOR_DIR}/#{author.dir_name}")
       rescue => ex
-        Dir.chdir(FILE_DIR)
+        Dir.chdir(AUTHOR_DIR)
       end
     %>
       <tr>
         <td><%= author.name %></td>
         <td><%= author.dir_name %></td>
-        <td><%= Dir.pwd == FILE_DIR ? '否' : '是' %></td>
+        <td><%= Dir.pwd == AUTHOR_DIR ? '否' : '是' %></td>
         <td><%= author.image.attached? ? '是' : '否' %></td>
         <td>
-          <%= link_to '檢視', manager_author_path(author), class: "btn btn-primary btn-sm" %>
-          <%= link_to '修改', edit_manager_author_path(author), class: "btn btn-primary btn-sm" %>
-          <%= link_to '刪除', manager_author_path(author), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-sm" %>
+          <%= link_to manager_author_path(author), class: "btn btn-primary btn-sm" do %>
+            <i class="fas fa-eye"></i> 檢視
+          <% end%>
+          <%= link_to edit_manager_author_path(author), class: "btn btn-primary btn-sm" do %>
+            <i class="fas fa-edit"></i> 修改
+          <% end%>
+          <%= link_to manager_author_path(author), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-sm" do %>
+            <i class="fas fa-trash-alt"></i> 刪除
+          <% end%>
         </td>
       </tr>
     <% end %>

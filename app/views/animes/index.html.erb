@@ -1,0 +1,40 @@
+<%= link_to new_manager_anime_path, class: "btn btn-primary btn-sm" do %>
+  <i class="fas fa-plus"></i> 新動畫
+<% end%>
+<%= link_to authors_path, class: "btn btn-primary btn-sm right" do %>
+  <i class="fas fa-th"></i> 瀏覽漫畫
+<% end%>
+<%= link_to manager_animes_path, class: "btn btn-primary btn-sm right" do %>
+  <i class="fas fa-align-justify"></i> 管理介面
+<% end%>
+
+<div class='tag_list'>
+  <% @all_names.each do |t| %>
+    <%= link_to manager_animes_path(tag_name: t), class: "badge badge-primary" do %>
+      <i class="fas fa-tag"></i> <%= t %>
+    <% end%>
+  <% end %>
+</div>
+
+<div class="list">
+  <% @animes.each do |anime|
+    begin
+      Dir.chdir("#{AINME_DIR}/#{anime.dir_name}")
+    rescue => ex
+      Dir.chdir(AINME_DIR)
+    end
+
+    unless Dir.pwd == AINME_DIR %>
+      <%= link_to anime do %>
+        <div class="item">
+          <div class="name">
+            <%= anime.name %>
+          </div>
+          <div class="image">
+            <%= image_tag anime.image.variant(resize: "140x198!") if anime.image.attached? %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

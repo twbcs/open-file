@@ -1,5 +1,5 @@
 
-<%= link_to manager_authors_path, class: "btn btn-primary btn-sm" do %>
+<%= link_to manager_animes_path, class: "btn btn-primary btn-sm" do %>
   <i class="fas fa-long-arrow-alt-left"></i> 返回
 <% end%>
 <p class="mt-2">
@@ -7,38 +7,38 @@
     <i class="fas fa-folder-open"></i> 開啟
   <% end %>
   <strong>名稱:</strong>
-  <%= @author.name %> <%= link_to edit_manager_author_path(@author), class: "btn btn-primary btn-sm" do %>
+  <%= @anime.name %> <%= link_to edit_manager_anime_path(@anime), class: "btn btn-primary btn-sm" do %>
     <i class="fas fa-edit"></i> 修改
   <% end%>
 </p>
 
 <p>
   <strong>目錄名稱:</strong>
-  <%= @author.dir_name %>
+  <%= @anime.dir_name %>
 </p>
 
 <div class='tag_list'>
-  <% @author.tag_names.each do |x| %>
-    <%= link_to authors_path(tag_name: x), class: "badge badge-primary" do %>
+  <% @anime.tag_names.each do |x| %>
+    <%= link_to animes_path(tag_name: x), class: "badge badge-primary" do %>
       <i class="fas fa-tag"></i> <%= x %>
     <% end%>
   <% end %>
 </div>
 
 <div class="image">
-  <%= image_tag @author.image.variant(resize: "200x400")  if @author.image.attached? %>
+  <%= image_tag @anime.image.variant(resize: "200x400")  if @anime.image.attached? %>
 </div>
 
 <p></p>
 
   <%
   begin
-    Dir.chdir("#{AUTHOR_DIR}/#{@author.dir_name}")
+    Dir.chdir("#{AINME_DIR}/#{@anime.dir_name}")
   rescue => ex
-    Dir.chdir(AUTHOR_DIR)
+    Dir.chdir(AINME_DIR)
   end
 
-  unless Dir.pwd == AUTHOR_DIR %>
+  unless Dir.pwd == AINME_DIR %>
     <% Dir.children(Dir.pwd).each_with_index do |file, index| %>
       <div class="file">
         <%= file %>
@@ -46,7 +46,7 @@
 osascript -e 'tell app "Simple Comic" to close front window'
 osascript -e 'quit app "/Applications/Simple Comic.app"'
 osascript -e 'tell application "Simple Comic"
-  open "<%= "#{AUTHOR_DIR}/#{@author.dir_name}/#{file}" %>"
+  open "<%= "#{AINME_DIR}/#{@anime.dir_name}/#{file}" %>"
 end tell'
         </textarea>
         <button type="button" name="button" onclick="copylink('file_<%= index%>')" class="btn btn-primary btn-sm"><i class="fas fa-copy"></i> copy</button>

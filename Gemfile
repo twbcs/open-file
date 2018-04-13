@@ -37,7 +37,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
 end
 gem 'jquery-rails'
-gem 'rails-assets-Font-Awesome', source: 'https://rails-assets.org'
+gem 'font-awesome-sass', '~> 5.0.9'
 gem 'gutentag', '~> 2.3'
 
 # Reduces boot times through caching; required in config/boot.rb

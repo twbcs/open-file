@@ -14,8 +14,24 @@
  *= require_self
  */
  @import "bootstrap";
- // @import "font-awesome";
+ @import "font-awesome-sprockets";
+ @import "font-awesome";
+
+@media (min-width: 1500px) {
+  .container {
+      max-width: 1290px;
+  }
+}
+@media (min-width: 1900px) {
+  .container {
+    max-width: 1600px;
+  }
+}
 
 a:hover {
   text-decoration: none;
+}
+
+.right {
+  float: right;
 }

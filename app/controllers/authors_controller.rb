@@ -1,6 +1,8 @@
 class AuthorsController < ApplicationController
 
   def index
+    all_tags = Gutentag::Tagging.where(taggable_type: 'Author').group(:tag_id).pluck(:tag_id)
+    @all_names = Gutentag::Tag.where(id: all_tags).pluck(:name)
     if params[:tag_name]
       @authors = Author.tagged_with(names: params[:tag_name], :match => :any).with_attached_image
     else

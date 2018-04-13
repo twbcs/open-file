@@ -1,23 +1,31 @@
-<p id="notice"><%= notice %></p>
-<%= link_to '新作者', new_manager_author_path, class: "btn btn-primary btn-sm" %>
-<%= link_to '管理介面', manager_authors_path, class: "btn btn-primary btn-sm" %>
+
+<%= link_to new_manager_author_path, class: "btn btn-primary btn-sm" do %>
+  <i class="fas fa-plus"></i> 新作者
+<% end%>
+<%= link_to animes_path, class: "btn btn-primary btn-sm right" do %>
+  <i class="fas fa-th"></i> 瀏覽動畫
+<% end%>
+<%= link_to manager_authors_path, class: "btn btn-primary btn-sm right" do %>
+  <i class="fas fa-align-justify"></i> 管理介面
+<% end%>
 
 <div class='tag_list'>
-  <% Gutentag::Tag.all.each do |t| %>
-    <%= link_to authors_path(tag_name: t.name), class: "badge badge-primary" do %>
-      <i class="fas fa-tag"></i><%= t.name %>
-    <% end %>
+  <% @all_names.each do |t| %>
+    <%= link_to manager_authors_path(tag_name: t), class: "badge badge-primary" do %>
+      <i class="fas fa-tag"></i> <%= t %>
+    <% end%>
   <% end %>
 </div>
+
 <div class="list">
   <% @authors.each do |author|
     begin
-      Dir.chdir("#{FILE_DIR}/#{author.dir_name}")
+      Dir.chdir("#{AUTHOR_DIR}/#{author.dir_name}")
     rescue => ex
-      Dir.chdir(FILE_DIR)
+      Dir.chdir(AUTHOR_DIR)
     end
 
-    unless Dir.pwd == FILE_DIR %>
+    unless Dir.pwd == AUTHOR_DIR %>
       <%= link_to author do %>
         <div class="item">
           <div class="name">

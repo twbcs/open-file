@@ -1,1 +1,2 @@
-FILE_DIR = '/Users/archer/sim'
+ANIME_DIR = '/Users/archer/sim'
+AUTHOR_DIR = '/Users/archer/sim'

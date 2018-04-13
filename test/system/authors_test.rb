@@ -19,7 +19,7 @@ class AuthorsTest < ApplicationSystemTestCase
     click_on "Create Author"
 
     assert_text "Author was successfully created"
-    click_on "Back"
+    click_on "返回"
   end
 
   test "updating a Author" do
@@ -31,7 +31,7 @@ class AuthorsTest < ApplicationSystemTestCase
     click_on "Update Author"
 
     assert_text "Author was successfully updated"
-    click_on "Back"
+    click_on "返回"
   end
 
   test "destroying a Author" do

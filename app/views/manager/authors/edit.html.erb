@@ -2,5 +2,9 @@
 
 <%= render 'form', author: @author %>
 
-<%= link_to 'Show', manager_author_path(@author), class: "btn btn-primary" %> |
-<%= link_to 'Back', manager_authors_path, class: "btn btn-primary" %>
+<%= link_to manager_author_path(@author), class: "btn btn-primary" do %>
+  <i class="fas fa-eye"></i> 檢視
+<% end%> |
+<%= link_to manager_authors_path, class: "btn btn-primary" do %>
+  <i class="fas fa-long-arrow-alt-left"></i> 返回
+<% end%>
