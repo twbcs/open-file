@@ -13,7 +13,7 @@
 
 <div class='tag_list'>
   <% @all_names.each do |t| %>
-    <%= link_to manager_animes_path(tag_name: t), class: "badge badge-primary" do %>
+    <%= link_to animes_path(tag_name: t), class: "badge badge-primary" do %>
       <i class="fas fa-tag"></i> <%= t %>
     <% end%>
   <% end %>

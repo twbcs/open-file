@@ -6,7 +6,7 @@
 <p class="mt-2">
   <%= render 'shared/disk', object: @movie, dir: MOVIE_DIR %>
   <strong>名稱:</strong>
-  <%= @movie.name %> <%= link_to edit_manager_author_path(@movie), class: "btn btn-primary btn-sm" do %>
+  <%= @movie.name %> <%= link_to edit_manager_movie_path(@movie), class: "btn btn-primary btn-sm" do %>
     <i class="fas fa-edit"></i> 修改
   <% end%>
 </p>
