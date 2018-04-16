@@ -1,4 +1,4 @@
-class Manager::MoviesController < ApplicationController
+class Manager::MoviesController < Manager::ManagerController
   before_action :set_movie, only: [:show, :edit, :update, :destroy, :remove]
 
   def index

@@ -4,7 +4,9 @@
 <% end%>
 
 <p class="mt-2">
-  <%= render 'shared/disk', object: @anime, dir: ANIME_DIR %>
+  <%= link_to run_anime_path(id: @anime.id), remote: true, class: "btn btn-primary btn-sm" do %>
+    <i class="fas fa-folder-open"></i> 開啟
+  <% end%>
   <strong>名稱:</strong>
   <%= @anime.name %> <%= link_to edit_manager_anime_path(@anime), class: "btn btn-primary btn-sm" do %>
     <i class="fas fa-edit"></i> 修改
@@ -22,38 +24,20 @@
 <div class="image mb-2">
   <%= image_tag @anime.image.variant(resize: "400x800")  if @anime.image.attached? %>
 </div>
+<%
+begin
+  Dir.chdir("#{ANIME_DIR}/#{@anime.dir_name}")
+rescue => ex
+  Dir.chdir(ANIME_DIR)
+end
 
-  <%
-  unless Dir.pwd == ANIME_DIR %>
-    <% Dir.children(Dir.pwd).each_with_index do |file, index| %>
-      <% if File.extname(file).in?(['.mp4', '.mkv', '.avi']) && file[0] != '.' %>
-        <div class="file">
-          <%= file %>
-          <textarea name="name" rows="8" cols="80" class='hide' id='file_<%= index%>'>
-osascript -e 'tell app "MPlayerX" to close front window'
-osascript -e 'quit app "/Applications/MPlayerX.app"'
-open -a MPlayerX
-osascript -e 'tell application "MPlayerX"
-open "<%= "#{ANIME_DIR}/#{@anime.dir_name}/#{file}" %>"
-end tell'
-          </textarea>
-          <button type="button" name="button" onclick="copylink('file_<%= index%>')" class="btn btn-primary btn-sm"><i class="fas fa-copy"></i> copy</button>
-        </div>
-      <% end %>
+unless Dir.pwd == ANIME_DIR %>
+  <% Dir.children(Dir.pwd).each_with_index do |file, index| %>
+    <% if File.extname(file).in?(['.mp4', '.mkv', '.avi']) && file[0] != '.' %>
+      <div class="file">
+        <%= file %>
+        <%= link_to "執行", run_anime_path(id: @anime.id, file: file), remote: true, class: "btn btn-primary btn-sm" %>
+      </div>
     <% end %>
   <% end %>
-
-<script type="text/javascript">
-function copylink(id) {
-  /* Get the text field */
-  var copyText = document.getElementById(id);
-  copyText.className = '';
-
-  /* Select the text field */
-  copyText.select();
-
-  /* Copy the text inside the text field */
-  document.execCommand("Copy");
-  copyText.className = 'hide';
-}
-</script>
+<% end %>

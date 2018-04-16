@@ -13,5 +13,14 @@ class MoviesController < ApplicationController
     @movie = Movie.find(params[:id])
   end
 
+  def run
+    @movie = Movie.find(params[:id])
+    if params[:file]
+      player(MOVIE_DIR, @movie, params[:file])
+    else
+      finder(MOVIE_DIR, @movie)
+    end
+  end
+
   private
 end

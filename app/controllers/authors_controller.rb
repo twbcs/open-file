@@ -14,5 +14,13 @@ class AuthorsController < ApplicationController
     @author = Author.find(params[:id])
   end
 
+  def run
+    @author = Author.find(params[:id])
+    if params[:file]
+      look(AUTHOR_DIR, @author, params[:file])
+    else
+      finder(AUTHOR_DIR, @author)
+    end
+  end
   private
 end

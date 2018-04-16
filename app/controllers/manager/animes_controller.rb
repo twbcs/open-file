@@ -1,4 +1,4 @@
-class Manager::AnimesController < ApplicationController
+class Manager::AnimesController < Manager::ManagerController
   before_action :set_anime, only: [:show, :edit, :update, :destroy, :remove]
 
   def index

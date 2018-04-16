@@ -1,0 +1,10 @@
+$('#file_<%= params[:index]%>').append("<%=j render 'form', owner: @owner, archive: @archive %>")
+
+$('.tag_list .tag.active').click(function() {
+  if ($(this).hasClass('active')) {
+    var tag = $(this).html();
+    var tags = $('#archive_tag_names').val();
+    $('#archive_tag_names').val(tags + ' ' + tag);
+    $(this).removeClass('active').removeClass('badge-primary').addClass('badge-secondary');
+  }
+});

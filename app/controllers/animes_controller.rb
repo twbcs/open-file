@@ -13,5 +13,14 @@ class AnimesController < ApplicationController
     @anime = Anime.find(params[:id])
   end
 
+  def run
+    @anime = Anime.find(params[:id])
+    if params[:file]
+      player(ANIME_DIR, @anime, params[:file])
+    else
+      finder(ANIME_DIR, @anime)
+    end
+  end
+
   private
 end

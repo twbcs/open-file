@@ -1,5 +1,5 @@
 class Manager::AuthorsController < Manager::ManagerController
-  before_action :set_author, only: [:show, :edit, :update, :destroy, :remove]
+  before_action :set_author, only: [:edit, :update, :destroy, :remove]
 
   def index
     all_tags = Gutentag::Tagging.where(taggable_type: 'Author').group(:tag_id).pluck(:tag_id)
@@ -12,6 +12,7 @@ class Manager::AuthorsController < Manager::ManagerController
   end
 
   def show
+    @author = Author.includes(:archives).find(params[:id])
   end
 
   def new
