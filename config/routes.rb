@@ -24,14 +24,15 @@ Rails.application.routes.draw do
     resources :authors do
       get :remove, on: :member
       get :search, on: :collection
-      resources :archives, only: [:edit, :update, :create, :new]
+      resources :archives, only: [:edit, :update, :create, :new] do
+        get :rating, on: :member
+      end
     end
 
     resources :movies do
       get :remove, on: :member
       get :search, on: :collection
     end
-
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -4,6 +4,7 @@ class AddArchiveModel < ActiveRecord::Migration[5.2]
       t.references :owner
       t.string :owner_type
       t.string :name
+      t.integer :rating
       t.index [:owner_id, :owner_type]
     end
   end

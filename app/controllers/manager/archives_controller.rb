@@ -25,6 +25,12 @@ class Manager::ArchivesController < Manager::ManagerController
     end
   end
 
+  def rating
+    archive = Archive.find(params[:id])
+    archive.update_column(rating: params[:rating])
+    render json: archive
+  end
+
   private
   def archive_params
     params.require(:archive).permit(:name, :owner_id, :owner_type, tag_names: [])

@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2018_04_16_054147) do
     t.integer "owner_id"
     t.string "owner_type"
     t.string "name"
+    t.integer "rating"
     t.index ["owner_id", "owner_type"], name: "index_archives_on_owner_id_and_owner_type"
     t.index ["owner_id"], name: "index_archives_on_owner_id"
   end
