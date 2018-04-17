@@ -1,3 +1,4 @@
+$('.edit').remove();
 $('#file_<%= params[:index]%>').append("<%=j render 'form', owner: @owner, archive: @archive %>")
 
 $('.tag_list .tag.active').click(function() {

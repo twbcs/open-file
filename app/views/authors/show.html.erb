@@ -1,44 +1,80 @@
-
 <%= link_to authors_path, class: "btn btn-primary btn-sm" do %>
   <i class="fas fa-long-arrow-alt-left"></i> 返回
 <% end%>
 
-<p class="mt-2">
-  <%= link_to run_author_path(id: @author.id), remote: true, class: "btn btn-primary btn-sm" do %>
-    <i class="fas fa-folder-open"></i> 開啟
-  <% end%>
-  <strong>名稱:</strong>
-  <%= @author.name %> <%= link_to edit_manager_author_path(@author), class: "btn btn-primary btn-sm" do %>
-    <i class="fas fa-edit"></i> 修改
-  <% end%>
-</p>
+<div class="row">
+  <div class="col-lg-5 col-xl-5">
+    <p class="mt-2">
+      <%= link_to run_author_path(id: @author.id), remote: true, class: "btn btn-primary btn-sm" do %>
+        <i class="fas fa-folder-open"></i> 開啟
+      <% end%>
+      <strong>名稱:</strong>
+      <%= @author.name %> <%= link_to edit_manager_author_path(@author), class: "btn btn-primary btn-sm" do %>
+        <i class="fas fa-edit"></i> 修改
+      <% end%>
+      <%= link_to manager_author_path(@author), class: "btn btn-primary btn-sm" do %>
+        <i class="fas fa-edit"></i> 管理
+      <% end%>
+    </p>
 
-<div class='tag_list'>
-  <% @author.tag_names.each do |x| %>
-    <%= link_to authors_path(tag_name: x), class: "badge badge-primary" do %>
-      <i class="fas fa-tag"></i> <%= x %>
+    <div class='tag_list'>
+      <% @author.tag_names.each do |x| %>
+        <%= link_to authors_path(tag_name: x), class: "badge badge-primary" do %>
+          <i class="fas fa-tag"></i> <%= x %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class="image mb-2">
+      <%= image_tag @author.image.variant(resize: "400x800")  if @author.image.attached? %>
+    </div>
+  </div>
+
+  <div class="col-lg-12 col-xl-7">
+    <%
+    begin
+      Dir.chdir("#{AUTHOR_DIR}/#{@author.dir_name}")
+    rescue => ex
+      Dir.chdir(AUTHOR_DIR)
+    end
+
+    unless Dir.pwd == AUTHOR_DIR %>
+      <% Dir.children(Dir.pwd).each_with_index do |file, index| %>
+        <% if file[0] != '.' %>
+          <div class="file" id='file_<%= index%>'>
+            <%= link_to "執行", run_author_path(id: @author.id, file: file), remote: true, class: "btn btn-primary btn-sm" %>
+            <% exist = false %>
+            <% if @author.archives.any? %>
+              <% @author.archives.each do |archive|%>
+                <% if file == archive.name
+                  exist = true %>
+                  <div class="rating show" data-rating='<%= archive.rating || 0 %>' id="rating-<%= index %>">
+                    <% [1,3,5,7,9].each do |star| %>
+                      <div class="star">
+                        <%= link_to '#', remote: true do %>
+                          <div class="star-left <%= 'hover' if archive.rating && archive.rating >= star %>" data-star='<%= star %>'></div>
+                        <% end %>
+                        <%= link_to '#',remote: true do %>
+                          <div class="star-right <%= 'hover' if archive.rating && archive.rating >= star + 1 %>" data-star='<%= star + 1 %>'></div>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                  <%= file %>
+                  <% archive.tag_names.each do |x| %>
+                    <%= link_to authors_path(tag_name: x), class: "badge badge-primary" do %>
+                      <i class="fas fa-tag"></i> <%= x %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+            <% unless exist %>
+              <%= file %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 </div>
-
-<div class="image mb-2">
-  <%= image_tag @author.image.variant(resize: "400x800")  if @author.image.attached? %>
-</div>
-
-<%
-begin
-  Dir.chdir("#{AUTHOR_DIR}/#{@author.dir_name}")
-rescue => ex
-  Dir.chdir(AUTHOR_DIR)
-end
-
-unless Dir.pwd == AUTHOR_DIR %>
-  <% Dir.children(Dir.pwd).each_with_index do |file, index| %>
-    <% if file[0] != '.' %>
-      <div class="file">
-        <%= file %>
-        <%= link_to "執行", run_author_path(id: @author.id, file: file), remote: true, class: "btn btn-primary btn-sm" %>
-      </div>
-    <% end %>
-  <% end %>
-<% end %>

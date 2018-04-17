@@ -11,7 +11,7 @@ class AuthorsController < ApplicationController
   end
 
   def show
-    @author = Author.find(params[:id])
+    @author = Author.includes(:archives).find(params[:id])
   end
 
   def run

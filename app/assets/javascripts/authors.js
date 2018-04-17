@@ -10,4 +10,32 @@ $(document).on('turbolinks:load', function() {
   });
   $('.alert').alert();
 
-})
+  $('.star div').mouseenter(function(){
+    if (!$(this).parent().parent().parent().hasClass('show')) {
+      var level = $(this).data('star');
+      var id =  $(this).parent().parent().parent().attr('id');
+      $('#' + id + ' .star div').each(function() {
+        if ($(this).data('star') <= level) {
+          $(this).addClass('hover');
+        } else {
+          $(this).removeClass('hover');
+        }
+      });
+    }
+  }).mouseleave(function() {
+    if (!$(this).parent().parent().parent().hasClass('show')) {
+      var level = $(this).parent().parent().parent().data('rating');
+      var id =  $(this).parent().parent().parent().attr('id');
+      $('#' + id + ' .star div').each(function() {
+        if ($(this).data('star') <= level) {
+          $(this).addClass('hover');
+        } else {
+          $(this).removeClass('hover');
+        }
+      });
+    }
+  }).click(function() {
+    var level = $(this).data('star');
+    $(this).parent().parent().parent().data('rating', level);
+  });
+});

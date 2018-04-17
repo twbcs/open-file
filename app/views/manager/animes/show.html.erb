@@ -41,8 +41,8 @@ unless Dir.pwd == ANIME_DIR %>
   <% Dir.children(Dir.pwd).each_with_index do |file, index| %>
     <% if File.extname(file).in?(['.mp4', '.mkv', '.avi']) && file[0] != '.' %>
       <div class="file">
-        <%= file %>
         <%= link_to "執行", run_anime_path(id: @anime.id, file: file), remote: true, class: "btn btn-primary btn-sm" %>
+        <%= file %>
       </div>
     <% end %>
   <% end %>

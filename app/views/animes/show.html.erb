@@ -1,43 +1,49 @@
-
 <%= link_to animes_path, class: "btn btn-primary btn-sm" do %>
   <i class="fas fa-long-arrow-alt-left"></i> 返回
 <% end%>
 
-<p class="mt-2">
-  <%= link_to run_anime_path(id: @anime.id), remote: true, class: "btn btn-primary btn-sm" do %>
-    <i class="fas fa-folder-open"></i> 開啟
-  <% end%>
-  <strong>名稱:</strong>
-  <%= @anime.name %> <%= link_to edit_manager_anime_path(@anime), class: "btn btn-primary btn-sm" do %>
-    <i class="fas fa-edit"></i> 修改
-  <% end%>
-</p>
+<div class="row">
+  <div class="col-lg-5 col-xl-5">
+    <p class="mt-2">
+      <%= link_to run_anime_path(id: @anime.id), remote: true, class: "btn btn-primary btn-sm" do %>
+        <i class="fas fa-folder-open"></i> 開啟
+      <% end%>
+      <strong>名稱:</strong>
+      <%= @anime.name %> <%= link_to edit_manager_anime_path(@anime), class: "btn btn-primary btn-sm" do %>
+        <i class="fas fa-edit"></i> 修改
+      <% end%>
+    </p>
 
-<div class='tag_list'>
-  <% @anime.tag_names.each do |x| %>
-    <%= link_to animes_path(tag_name: x), class: "badge badge-primary" do %>
-      <i class="fas fa-tag"></i> <%= x %>
+    <div class='tag_list'>
+      <% @anime.tag_names.each do |x| %>
+        <%= link_to animes_path(tag_name: x), class: "badge badge-primary" do %>
+          <i class="fas fa-tag"></i> <%= x %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class="image mb-2">
+      <%= image_tag @anime.image.variant(resize: "400x800")  if @anime.image.attached? %>
+    </div>
+  </div>
+
+  <div class="col-lg-12 col-xl-7">
+    <%
+    begin
+      Dir.chdir("#{ANIME_DIR}/#{@anime.dir_name}")
+    rescue => ex
+      Dir.chdir(ANIME_DIR)
+    end
+
+    unless Dir.pwd == ANIME_DIR %>
+      <% Dir.children(Dir.pwd).each_with_index do |file, index| %>
+        <% if File.extname(file).in?(['.mp4', '.mkv', '.avi']) && file[0] != '.' %>
+          <div class="file">
+            <%= link_to "執行", run_anime_path(id: @anime.id, file: file), remote: true, class: "btn btn-primary btn-sm" %>
+            <%= file %>
+          </div>
+        <% end %>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 </div>
-
-<div class="image mb-2">
-  <%= image_tag @anime.image.variant(resize: "400x800")  if @anime.image.attached? %>
-</div>
-<%
-begin
-  Dir.chdir("#{ANIME_DIR}/#{@anime.dir_name}")
-rescue => ex
-  Dir.chdir(ANIME_DIR)
-end
-
-unless Dir.pwd == ANIME_DIR %>
-  <% Dir.children(Dir.pwd).each_with_index do |file, index| %>
-    <% if File.extname(file).in?(['.mp4', '.mkv', '.avi']) && file[0] != '.' %>
-      <div class="file">
-        <%= file %>
-        <%= link_to "執行", run_anime_path(id: @anime.id, file: file), remote: true, class: "btn btn-primary btn-sm" %>
-      </div>
-    <% end %>
-  <% end %>
-<% end %>

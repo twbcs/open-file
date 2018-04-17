@@ -27,7 +27,7 @@ class Manager::ArchivesController < Manager::ManagerController
 
   def rating
     archive = Archive.find(params[:id])
-    archive.update_column(rating: params[:rating])
+    archive.update_column(:rating, params[:rating])
     render json: archive
   end
 
