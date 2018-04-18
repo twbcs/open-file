@@ -20,6 +20,37 @@
   <% end %>
 </div>
 
+<div class='tag_list'>
+  <% @all_item_names.each do |t| %>
+    <%= link_to authors_path(tag_name: t), class: "badge badge-primary" do %>
+      <i class="fas fa-tag"></i> <%= t %>
+    <% end%>
+  <% end %>
+</div>
+
+<div class="list">
+  <% @authorsx.each do |author|
+    begin
+      Dir.chdir("#{AUTHOR_DIR}/#{author.dir_name}")
+    rescue => ex
+      Dir.chdir(AUTHOR_DIR)
+    end
+
+    unless Dir.pwd == AUTHOR_DIR %>
+      <%= link_to author do %>
+        <div class="item">
+          <div class="name">
+            <%= author.name %>
+          </div>
+          <div class="image">
+            <%= image_tag author.image.variant(resize: "140x198!") if author.image.attached? %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
 <div class="list">
   <% @authors.each do |author|
     begin
