@@ -2,8 +2,8 @@ class Manager::AuthorsController < Manager::ManagerController
   before_action :set_author, only: [:edit, :update, :destroy, :remove]
 
   def index
-    all_tags = Gutentag::Tagging.where(taggable_type: 'Author').group(:tag_id).pluck(:tag_id)
-    @all_names = Gutentag::Tag.where(id: all_tags).pluck(:name)
+    @all_names = get_tags('Author')
+    @all_item_names = get_tags('Archive')
     if params[:tag_name]
       @authors = Author.tagged_with(names: params[:tag_name], match: :any).with_attached_image
     else
@@ -13,6 +13,8 @@ class Manager::AuthorsController < Manager::ManagerController
 
   def show
     @author = Author.includes(:archives).find(params[:id])
+    all_tags = Gutentag::Tagging.where(taggable_type: 'Archive', taggable_id: @author.archives.ids).group(:tag_id).pluck(:tag_id)
+    @all_names = Gutentag::Tag.where(id: all_tags).pluck(:name)
   end
 
   def new
@@ -64,6 +66,11 @@ class Manager::AuthorsController < Manager::ManagerController
 
   def tag_split
     params[:author][:tag_names] = params[:author][:tag_names][0].split(' ') if params[:author][:tag_names].any?
+  end
+
+  def get_tags(type)
+    all_tags = Gutentag::Tagging.where(taggable_type: type).group(:tag_id).pluck(:tag_id)
+    Gutentag::Tag.where(id: all_tags).pluck(:name)
   end
 
   def tag_update

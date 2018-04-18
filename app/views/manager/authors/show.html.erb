@@ -26,6 +26,14 @@
   <% end %>
 </div>
 
+<div class='tag_list'>
+  <% @all_names.each do |x| %>
+    <%= link_to authors_path(tag_name: x), class: "badge badge-primary" do %>
+      <i class="fas fa-tag"></i> <%= x %>
+    <% end%>
+  <% end %>
+</div>
+
 <div class="image mb-2">
   <%= image_tag @author.image.variant(resize: "200x400")  if @author.image.attached? %>
 </div>
