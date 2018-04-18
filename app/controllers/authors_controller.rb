@@ -22,5 +22,6 @@ class AuthorsController < ApplicationController
       finder(AUTHOR_DIR, @author)
     end
   end
+
   private
 end

@@ -38,14 +38,14 @@ rescue => ex
 end
 
 unless Dir.pwd == AUTHOR_DIR %>
-  <% Dir.children(Dir.pwd).each_with_index do |file, index| %>
+  <% Dir.children(Dir.pwd).sort.each_with_index do |file, index| %>
     <% if file[0] != '.' %>
       <div class="file" id='file_<%= index%>'>
         <%= link_to "執行", run_author_path(id: @author.id, file: file), remote: true, class: "btn btn-primary btn-sm" %>
         <% exist = false %>
         <% if @author.archives.any? %>
           <% @author.archives.each do |archive|%>
-            <% if file == archive.name
+            <% if Digest::MD5.hexdigest(file) == Digest::MD5.hexdigest(archive.name)
               exist = true %>
               <%= link_to edit_manager_author_archive_path(author_id: @author.id, id: archive.id, index: index), remote: true, class: "btn btn-primary btn-sm" do %>
                 <i class="fas fa-edit"></i> 修改

@@ -2,6 +2,7 @@ class Manager::ArchivesController < Manager::ManagerController
   def new
     @owner = Author.find(params[:author_id])
     @archive = @owner.archives.new(name: params[:file])
+    @archive.save
   end
 
   def create
@@ -33,7 +34,7 @@ class Manager::ArchivesController < Manager::ManagerController
 
   private
   def archive_params
-    params.require(:archive).permit(:name, :owner_id, :owner_type, tag_names: [])
+    params.require(:archive).permit(:owner_id, :owner_type, tag_names: [])
   end
 
   def tag_split
