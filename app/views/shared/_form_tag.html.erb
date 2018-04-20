@@ -1,0 +1,7 @@
+<div class='tag_list'>
+  <% all_names.each do |t| %>
+    <% unless model.tag_list.include? t.name %>
+      <span class="tag active badge badge-primary"><%= t.name %></span>
+    <% end %>
+  <% end %>
+</div>

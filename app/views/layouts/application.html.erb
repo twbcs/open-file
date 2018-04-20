@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Kkdir</title>
+    <title>自有檔案庫</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,6 +11,7 @@
 
   <body>
     <div class="container">
+      <%= render 'layouts/nav' %>
       <% if notice %>
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
           <%= notice %>
@@ -19,7 +20,7 @@
           </button>
         </div>
       <% end %>
-      
+
       <%= yield %>
     </div>
   </body>

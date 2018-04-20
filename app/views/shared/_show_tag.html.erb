@@ -1,0 +1,7 @@
+<div class='tag_list'>
+  <% items.each do |t| %>
+  <%= link_to url_for(action: :index, tag_name: t), {class: "badge badge-primary"} do %>
+      <i class="fas fa-tag"></i> <%= t %>
+    <% end %>
+  <% end %>
+</div>

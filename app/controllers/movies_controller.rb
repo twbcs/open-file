@@ -1,6 +1,6 @@
 class MoviesController < ApplicationController
   def index
-    @all_names = Movie.tag_counts_on(:tags).pluck(:name)
+    @all_names = Movie.cache_tags
     if params[:tag_name]
       @movies = Movie.tagged_with(params[:tag_name], any: true).with_attached_image
     else

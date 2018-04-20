@@ -14,13 +14,7 @@
       <% end%>
     </p>
 
-    <div class='tag_list'>
-      <% @movie.tag_names.each do |x| %>
-        <%= link_to movies_path(tag_name: x), class: "badge badge-primary" do %>
-          <i class="fas fa-tag"></i> <%= x %>
-        <% end %>
-      <% end %>
-    </div>
+    <%= render 'shared/show_tag', items: @movie.tag_list %>
 
     <div class="image mb-2">
       <%= image_tag @movie.image.variant(resize: "400x800")  if @movie.image.attached? %>

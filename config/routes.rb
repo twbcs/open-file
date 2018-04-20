@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  root 'authors#index'
   resources :animes do
     get :search, on: :collection
     get :run, on: :member
@@ -34,5 +33,8 @@ Rails.application.routes.draw do
       get :search, on: :collection
     end
   end
+
+  root 'animes#index'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

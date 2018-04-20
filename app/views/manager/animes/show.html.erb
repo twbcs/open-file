@@ -18,13 +18,7 @@
   <%= @anime.dir_name %>
 </p>
 
-<div class='tag_list'>
-  <% @anime.tag_names.each do |x| %>
-    <%= link_to animes_path(tag_name: x), class: "badge badge-primary" do %>
-      <i class="fas fa-tag"></i> <%= x %>
-    <% end%>
-  <% end %>
-</div>
+<%= render 'shared/show_tag', items: @anime.tag_list %>
 
 <div class="image mb-2">
   <%= image_tag @anime.image.variant(resize: "200x400")  if @anime.image.attached? %>

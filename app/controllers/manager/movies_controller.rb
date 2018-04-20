@@ -2,7 +2,7 @@ class Manager::MoviesController < Manager::ManagerController
   before_action :set_movie, only: [:show, :edit, :update, :destroy, :remove]
 
   def index
-    @all_names = Movie.tag_counts_on(:tags).pluck(:name)
+    @all_names = Movie.cache_tags
     if params[:tag_name]
       @movies = Movie.tagged_with(params[:tag_name], any: true).with_attached_image
     else
@@ -41,6 +41,7 @@ class Manager::MoviesController < Manager::ManagerController
 
   def update
     if @movie.update(movie_params)
+      Rails.cache.delete('movie_tags')
       redirect_to @movie, notice: "#{@movie.name}已更新"
     else
       render :edit
@@ -58,6 +59,6 @@ class Manager::MoviesController < Manager::ManagerController
   end
 
   def movie_params
-    params.require(:movie).permit(:name, :dir_name, :image, tag_names: [])
+    params.require(:movie).permit(:name, :dir_name, :image, tag_list: [])
   end
 end

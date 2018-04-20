@@ -1,0 +1,35 @@
+<div class="mb-2 pt-1">
+  <% unless current_page?(action: :new) %>
+    <%= link_to url_for([:new, :manager, params[:controller].split('/').last.singularize]), class: "btn btn-primary btn-sm" do %>
+      <i class="fas fa-plus"></i> 新<%= url_name(params[:controller].split('/').last) %>
+    <% end %>
+  <% end %>
+
+  <% unless params[:controller].split('/').last == 'movies' && %w(index new edit show).include?(params[:action]) %>
+    <%= link_to movies_path, class: "btn btn-primary btn-sm right" do %>
+      <i class="fas fa-th"></i> 瀏覽電影
+    <% end %>
+  <% end %>
+
+  <% unless params[:controller].split('/').last == 'animes' && %w(index new edit show).include?(params[:action]) %>
+    <%= link_to animes_path, class: "btn btn-primary btn-sm right" do %>
+      <i class="fas fa-th"></i> 瀏覽動畫
+    <% end%>
+  <% end %>
+
+  <% unless params[:controller].split('/').last == 'authors' && %w(index new edit show).include?(params[:action]) %>
+    <%= link_to authors_path, class: "btn btn-primary btn-sm right" do %>
+      <i class="fas fa-th"></i> 瀏覽漫畫
+    <% end%>
+  <% end %>
+
+  <% unless params[:controller].split('/').first == 'manager' %>
+    <%= link_to url_for([:manager, params[:controller]]), class: "btn btn-primary btn-sm right" do %>
+      <i class="fas fa-align-justify"></i> 管理介面
+    <% end%>
+  <% else %>
+    <%= link_to url_for(controller: "/#{params[:controller].split('/').last}", action: :index), class: "btn btn-primary btn-sm right" do %>
+      <i class="fas fa-th"></i> 瀏覽畫面
+    <% end%>
+  <% end %>
+</div>

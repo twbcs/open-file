@@ -2,8 +2,8 @@ class Manager::AuthorsController < Manager::ManagerController
   before_action :set_author, only: [:edit, :update, :destroy, :remove]
 
   def index
-    @all_names = Author.tag_counts_on(:tags).pluck(:name)
-    @all_item_names = Archive.tag_counts_on(:tags).pluck(:name)
+    @all_names = Author.cache_tags
+    @all_item_names = Archive.cache_tags
 
     if params[:tag_name]
       @authors = Author.tagged_with(params[:tag_name], any: true).with_attached_image
@@ -29,7 +29,7 @@ class Manager::AuthorsController < Manager::ManagerController
   def create
     @author = Author.new(author_params)
     if @author.save
-      Rails.cache.delete('Author')
+      Rails.cache.delete('author_tags')
       redirect_to @author, notice: "#{@author.name}已新增"
     else
       render :new
@@ -46,7 +46,7 @@ class Manager::AuthorsController < Manager::ManagerController
   def update
     set_tags(@author, author_params)
     if @author.update(author_params)
-      Rails.cache.delete('Author')
+      Rails.cache.delete('author_tags')
       redirect_to @author, notice: "#{@author.name}已更新"
     else
       render :edit
@@ -55,7 +55,7 @@ class Manager::AuthorsController < Manager::ManagerController
 
   def destroy
     @author.destroy
-    Rails.cache.delete('Author')
+    Rails.cache.delete('author_tags')
     redirect_to authors_url, notice: "#{@author.name}已刪除"
   end
 

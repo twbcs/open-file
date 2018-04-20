@@ -1,8 +1,8 @@
 class AuthorsController < ApplicationController
 
   def index
-    @all_names = Author.tag_counts_on(:tags).pluck(:name)
-    @all_item_names = Archive.tag_counts_on(:tags).pluck(:name)
+    @all_names = Author.cache_tags
+    @all_item_names = Archive.cache_tags
 
     if params[:tag_name]
       @archives = Archive.tagged_with(params[:tag_name], any: true)
@@ -17,7 +17,7 @@ class AuthorsController < ApplicationController
 
   def show
     @author = Author.includes(:archives).find(params[:id])
-    @all_names = Author.tag_counts_on(:tags).pluck(:name)
+    @all_names = Author.cache_tags
   end
 
   def run
@@ -30,4 +30,5 @@ class AuthorsController < ApplicationController
   end
 
   private
+
 end

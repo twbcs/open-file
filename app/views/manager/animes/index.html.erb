@@ -1,17 +1,4 @@
 
-<%= link_to new_manager_anime_path, class: "btn btn-primary btn-sm" do %>
-  <i class="fas fa-plus"></i> 新動畫
-<% end%>
-<%= link_to movies_path, class: "btn btn-primary btn-sm right" do %>
-  <i class="fas fa-th"></i> 瀏覽電影
-<% end%>
-<%= link_to authors_path, class: "btn btn-primary btn-sm right" do %>
-  <i class="fas fa-th"></i> 瀏覽漫畫
-<% end%>
-<%= link_to animes_path, class: "btn btn-primary btn-sm right" do %>
-  <i class="fas fa-th"></i> 瀏覽畫面
-<% end%>
-
 <div class='tag_list'>
   <% @all_names.each do |t| %>
     <%= link_to manager_animes_path(tag_name: t), class: "badge badge-primary" do %>

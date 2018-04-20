@@ -28,6 +28,20 @@
   }
 }
 
+html,body {
+  height:100%;
+}
+
+body {
+  margin:0;
+  background-color: #ccc;
+}
+
+.container {
+  background-color: #fff;
+  height: 100%;
+}
+
 a:hover {
   text-decoration: none;
 }

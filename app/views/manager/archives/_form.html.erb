@@ -13,15 +13,15 @@
     <% end %>
 
     <div class="form-group row mb-1">
-      <%= form.label :tag_names, class: "col-sm-1 col-form-label" %>
+      <%= form.label :tag_list, class: "col-sm-1 col-form-label" %>
       <div class="col-sm-11">
-        <%= form.text_field :tag_names, name: 'archive[tag_names][]', value: archive.tag_names, class: 'form-control', id: 'form_tag_names'%>
+        <%= form.text_field :tag_list, name: 'archive[tag_list][]', value: archive.tag_list, class: 'form-control', id: 'archive_tag_names'%>
       </div>
     </div>
     <div class="row">
       <div class='tag_list col-sm-11 offset-md-1'>
         <% @all_names.each do |t| %>
-          <% unless archive.tag_names.include? t.name %>
+          <% unless archive.tag_list.include? t.name %>
             <span class="tag active badge badge-primary"><%= t.name %></span>
           <% end %>
         <% end %>

@@ -2,7 +2,7 @@ class Manager::AnimesController < Manager::ManagerController
   before_action :set_anime, only: [:show, :edit, :update, :destroy, :remove]
 
   def index
-    @all_names = Anime.tag_counts_on(:tags).pluck(:name)
+    @all_names = Anime.cache_tags
     if params[:tag_name]
       @animes = Anime.tagged_with(params[:tag_name], any: true).with_attached_image
     else
@@ -41,6 +41,7 @@ class Manager::AnimesController < Manager::ManagerController
 
   def update
     if @anime.update(anime_params)
+      Rails.cache.delete('anime_tags')
       redirect_to @anime, notice: "#{@anime.name}已更新"
     else
       render :edit
@@ -58,6 +59,6 @@ class Manager::AnimesController < Manager::ManagerController
   end
 
   def anime_params
-    params.require(:anime).permit(:name, :dir_name, :image, tag_names: [])
+    params.require(:anime).permit(:name, :dir_name, :image, tag_list: [])
   end
 end

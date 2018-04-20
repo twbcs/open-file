@@ -17,21 +17,9 @@
       <% end%>
     </p>
 
-    <div class='tag_list'>
-      <% @author.tag_list.each do |x| %>
-        <%= link_to authors_path(tag_name: x), class: "badge badge-primary" do %>
-          <i class="fas fa-tag"></i> <%= x %>
-        <% end %>
-      <% end %>
-    </div>
+    <%= render 'shared/show_tag', items: @author.tag_list %>
 
-    <div class='tag_list'>
-      <% @all_names.each do |x| %>
-        <%= link_to authors_path(tag_name: x), class: "badge badge-primary" do %>
-          <i class="fas fa-tag"></i> <%= x %>
-        <% end %>
-      <% end %>
-    </div>
+    <%= render 'shared/show_tag', items: @all_names %>
 
     <div class="image mb-2">
       <%= image_tag @author.image.variant(resize: "400x800")  if @author.image.attached? %>

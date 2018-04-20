@@ -22,16 +22,10 @@
   </div>
 
   <div class="field">
-    <%= form.label :tag_names %>
-    <%= form.text_field :tag_names, name: 'movie[tag_names][]', value: movie.tag_names, class: 'form-control', id: 'form_tag_names' %>
+    <%= form.label :tag_list %>
+    <%= form.text_field :tag_list, name: 'movie[tag_list][]', value: movie.tag_list, class: 'form-control', id: 'form_tag_names' %>
   </div>
-  <div class='tag_list'>
-    <% @all_names.each do |t| %>
-      <% unless movie.tag_names.include? t.name %>
-        <span class="tag active badge badge-primary"><%= t.name %></span>
-      <% end %>
-    <% end %>
-  </div>
+  <%= render 'shared/form_tag', all_names: @all_names, model: movie %>
 
   <div class="field">
     <% if movie.image.attached? %>

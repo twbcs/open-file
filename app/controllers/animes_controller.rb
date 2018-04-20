@@ -1,6 +1,6 @@
 class AnimesController < ApplicationController
   def index
-    @all_names = Anime.tag_counts_on(:tags).pluck(:name)
+    @all_names = Anime.cache_tags
     if params[:tag_name]
       @animes = Anime.tagged_with(params[:tag_name], any: true).with_attached_image
     else

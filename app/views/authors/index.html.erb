@@ -1,32 +1,7 @@
 
-<%= link_to new_manager_author_path, class: "btn btn-primary btn-sm" do %>
-  <i class="fas fa-plus"></i> 新作者
-<% end%>
-<%= link_to movies_path, class: "btn btn-primary btn-sm right" do %>
-  <i class="fas fa-th"></i> 瀏覽電影
-<% end%>
-<%= link_to animes_path, class: "btn btn-primary btn-sm right" do %>
-  <i class="fas fa-th"></i> 瀏覽動畫
-<% end%>
-<%= link_to manager_authors_path, class: "btn btn-primary btn-sm right" do %>
-  <i class="fas fa-align-justify"></i> 管理介面
-<% end%>
+<%= render 'shared/show_tag', items: @all_names %>
 
-<div class='tag_list'>
-  <% @all_names.each do |t| %>
-    <%= link_to authors_path(tag_name: t), class: "badge badge-primary" do %>
-      <i class="fas fa-tag"></i> <%= t %>
-    <% end %>
-  <% end %>
-</div>
-
-<div class='tag_list'>
-  <% @all_item_names.each do |t| %>
-    <%= link_to authors_path(tag_name: t), class: "badge badge-primary" do %>
-      <i class="fas fa-tag"></i> <%= t %>
-    <% end %>
-  <% end %>
-</div>
+<%= render 'shared/show_tag', items: @all_item_names %>
 
 a
 <div class="list">
@@ -52,27 +27,30 @@ a
         <% end %>
       <% end %>
     <% end %>
-  <% end  if @abc%>
+  <% end %>
 </div>
 b
 <div class="list">
   <% @authors.each do |author|
-    begin
-      Dir.chdir("#{AUTHOR_DIR}/#{author.dir_name}")
-    rescue => ex
-      Dir.chdir(AUTHOR_DIR)
-    end
+    cache ["list", author] do
 
-    unless Dir.pwd == AUTHOR_DIR %>
-      <%= link_to author do %>
-        <div class="item">
-          <div class="name">
-            <%= author.name %>
+      begin
+        Dir.chdir("#{AUTHOR_DIR}/#{author.dir_name}")
+      rescue => ex
+        Dir.chdir(AUTHOR_DIR)
+      end
+
+      unless Dir.pwd == AUTHOR_DIR %>
+        <%= link_to author do %>
+          <div class="item">
+            <div class="name">
+              <%= author.name %>
+            </div>
+            <div class="image">
+              <%= image_tag author.image.variant(resize: "140x198!") if author.image.attached? %>
+            </div>
           </div>
-          <div class="image">
-            <%= image_tag author.image.variant(resize: "140x198!") if author.image.attached? %>
-          </div>
-        </div>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
@@ -99,12 +77,12 @@ b
           <% end %>
         </div>
         <%= item.name %>
-        <% item.tag_names.each do |x| %>
+        <% item.tag_list.each do |x| %>
           <%= link_to authors_path(tag_name: x), class: "badge badge-primary" do %>
             <i class="fas fa-tag"></i> <%= x %>
           <% end %>
         <% end %>
       </div>
     </div>
-  <% end if @abc%>
+  <% end%>
 </div>

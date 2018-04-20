@@ -25,13 +25,7 @@
     <%= form.label :tag_list %>
     <%= form.text_field :tag_list, name: 'author[tag_list][]', value: author.tag_list, class: 'form-control', id: 'form_tag_names' %>
   </div>
-  <div class='tag_list'>
-    <% @all_names.each do |t| %>
-      <% unless author.tag_list.include? t.name %>
-        <span class="tag active badge badge-primary"><%= t.name %></span>
-      <% end %>
-    <% end %>
-  </div>
+  <%= render 'shared/form_tag', all_names: @all_names, model: author %>
 
   <div class="field">
     <% if author.image.attached? %>

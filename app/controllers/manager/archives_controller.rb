@@ -21,8 +21,10 @@ class Manager::ArchivesController < Manager::ManagerController
 
   def update
     archive = Archive.find(params[:id])
+    set_tags(archive, archive_params)
+
     if archive.update(archive_params)
-      Rails.cache.delete('Archive')
+      Rails.cache.delete('archive_tags')
       redirect_to manager_author_path(archive.owner.id)
     end
   end
@@ -36,7 +38,7 @@ class Manager::ArchivesController < Manager::ManagerController
   private
 
   def archive_params
-    params.require(:archive).permit(:owner_id, :owner_type, tag_names: [])
+    params.require(:archive).permit(:owner_id, :owner_type, tag_list: [])
   end
 
 end
