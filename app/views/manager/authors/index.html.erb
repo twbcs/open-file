@@ -28,13 +28,7 @@
 
   <tbody>
     <% @authors.each do |author| %>
-    <%
-      begin
-        Dir.chdir("#{AUTHOR_DIR}/#{author.dir_name}")
-      rescue => ex
-        Dir.chdir(AUTHOR_DIR)
-      end
-    %>
+      <% set_dir(AUTHOR_DIR, author) %>
       <tr>
         <td><%= author.name %></td>
         <td><%= author.dir_name %></td>

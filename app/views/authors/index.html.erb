@@ -1,18 +1,12 @@
 
 <%= render 'shared/show_tag', items: @all_names %>
-
 <%= render 'shared/show_tag', items: @all_item_names %>
 
 a
 <div class="list">
   <% @authorsx.each do |author|
     cache ["list", author] do
-
-      begin
-        Dir.chdir("#{AUTHOR_DIR}/#{author.dir_name}")
-      rescue => ex
-        Dir.chdir(AUTHOR_DIR)
-      end
+      set_dir(AUTHOR_DIR, author)
 
       unless Dir.pwd == AUTHOR_DIR %>
         <%= link_to author do %>
@@ -33,12 +27,7 @@ b
 <div class="list">
   <% @authors.each do |author|
     cache ["list", author] do
-
-      begin
-        Dir.chdir("#{AUTHOR_DIR}/#{author.dir_name}")
-      rescue => ex
-        Dir.chdir(AUTHOR_DIR)
-      end
+      set_dir(AUTHOR_DIR, author)
 
       unless Dir.pwd == AUTHOR_DIR %>
         <%= link_to author do %>

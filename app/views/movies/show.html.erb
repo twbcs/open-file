@@ -23,12 +23,7 @@
   </div>
 
   <div class="col-lg-12 col-xl-7">
-    <%
-    begin
-      Dir.chdir("#{MOVIE_DIR}/#{@movie.dir_name}")
-    rescue => ex
-      Dir.chdir(MOVIE_DIR)
-    end
+    <% set_dir(MOVIE_DIR, @movie)
 
     unless Dir.pwd == MOVIE_DIR %>
       <% Dir.children(Dir.pwd).sort.each_with_index do |file, index| %>

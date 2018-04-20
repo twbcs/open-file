@@ -25,13 +25,7 @@
 <div class="image mb-2">
   <%= image_tag @author.image.variant(resize: "200x400")  if @author.image.attached? %>
 </div>
-
-<%
-begin
-  Dir.chdir("#{AUTHOR_DIR}/#{@author.dir_name}")
-rescue => ex
-  Dir.chdir(AUTHOR_DIR)
-end
+<% set_dir(AUTHOR_DIR, @author)
 
 unless Dir.pwd == AUTHOR_DIR %>
   <% Dir.children(Dir.pwd).sort.each_with_index do |file, index| %>

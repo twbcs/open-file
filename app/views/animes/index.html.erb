@@ -3,11 +3,7 @@
 
 <div class="list">
   <% @animes.each do |anime|
-    begin
-      Dir.chdir("#{ANIME_DIR}/#{anime.dir_name}")
-    rescue => ex
-      Dir.chdir(ANIME_DIR)
-    end
+    set_dir(ANIME_DIR, anime)
 
     unless Dir.pwd == ANIME_DIR %>
       <%= link_to anime do %>

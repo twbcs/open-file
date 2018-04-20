@@ -20,13 +20,7 @@
 
   <tbody>
     <% @movies.each do |movie| %>
-    <%
-      begin
-        Dir.chdir("#{MOVIE_DIR}/#{movie.dir_name}")
-      rescue => ex
-        Dir.chdir(MOVIE_DIR)
-      end
-    %>
+    <% set_dir(MOVIE_DIR, movie) %>
       <tr>
         <td><%= movie.name %></td>
         <td><%= movie.dir_name %></td>

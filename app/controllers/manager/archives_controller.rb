@@ -7,8 +7,7 @@ class Manager::ArchivesController < Manager::ManagerController
   end
 
   def create
-    owner = Author.find(params[:author_id])
-    archive = owner.archives.new(archive_params)
+    archive = Author.find(params[:author_id]).yield_self {|owner| owner.archives.new(archive_params)}
     if archive.save
       redirect_to manager_author_path(owner.id)
     end

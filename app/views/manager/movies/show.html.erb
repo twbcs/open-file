@@ -23,13 +23,7 @@
 <div class="image mb-2">
   <%= image_tag @movie.image.variant(resize: "200x400")  if @movie.image.attached? %>
 </div>
-
-<%
-begin
-  Dir.chdir("#{MOVIE_DIR}/#{@movie.dir_name}")
-rescue => ex
-  Dir.chdir(MOVIE_DIR)
-end
+<% set_dir(MOVIE_DIR, @movie)
 
 unless Dir.pwd == MOVIE_DIR %>
   <% Dir.children(Dir.pwd).sort.each_with_index do |file, index| %>
