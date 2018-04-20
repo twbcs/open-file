@@ -1,5 +1,5 @@
 class Archive < ApplicationRecord
-  Gutentag::ActiveRecord.call self
+  acts_as_taggable
   belongs_to :owner, polymorphic: true
 
 end

@@ -22,12 +22,12 @@
   </div>
 
   <div class="field">
-    <%= form.label :tag_names %>
-    <%= form.text_field :tag_names, name: 'author[tag_names][]', value: author.tag_names, class: 'form-control' %>
+    <%= form.label :tag_list %>
+    <%= form.text_field :tag_list, name: 'author[tag_list][]', value: author.tag_list, class: 'form-control', id: 'form_tag_names' %>
   </div>
   <div class='tag_list'>
-    <% Gutentag::Tag.all.each do |t| %>
-      <% unless author.tag_names.include? t.name %>
+    <% @all_names.each do |t| %>
+      <% unless author.tag_list.include? t.name %>
         <span class="tag active badge badge-primary"><%= t.name %></span>
       <% end %>
     <% end %>

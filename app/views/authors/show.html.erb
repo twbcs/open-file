@@ -18,7 +18,7 @@
     </p>
 
     <div class='tag_list'>
-      <% @author.tag_names.each do |x| %>
+      <% @author.tag_list.each do |x| %>
         <%= link_to authors_path(tag_name: x), class: "badge badge-primary" do %>
           <i class="fas fa-tag"></i> <%= x %>
         <% end %>
@@ -29,7 +29,7 @@
       <% @all_names.each do |x| %>
         <%= link_to authors_path(tag_name: x), class: "badge badge-primary" do %>
           <i class="fas fa-tag"></i> <%= x %>
-        <% end%>
+        <% end %>
       <% end %>
     </div>
 
@@ -69,7 +69,7 @@
                     <% end %>
                   </div>
                   <%= file %>
-                  <% archive.tag_names.each do |x| %>
+                  <% archive.tag_list.each do |x| %>
                     <%= link_to authors_path(tag_name: x), class: "badge badge-primary" do %>
                       <i class="fas fa-tag"></i> <%= x %>
                     <% end %>

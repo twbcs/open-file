@@ -1,22 +1,23 @@
 class AuthorsController < ApplicationController
 
   def index
-    @all_names = get_tags('Author')
-    @all_item_names = get_tags('Archive')
+    @all_names = Author.tag_counts_on(:tags).pluck(:name)
+    @all_item_names = Archive.tag_counts_on(:tags).pluck(:name)
+
     if params[:tag_name]
-      author_ids = Archive.tagged_with(names: params[:tag_name], match: :any).pluck(:owner_id)
-      @authorsx = Author.where(id: author_ids).with_attached_image
-      @authors = Author.tagged_with(names: params[:tag_name], match: :any).with_attached_image
+      @archives = Archive.tagged_with(params[:tag_name], any: true)
+      @authorsx = Author.where(id: @archives.pluck(:owner_id)).with_attached_image
+      @authors = Author.tagged_with(params[:tag_name], any: true).with_attached_image
     else
-      @authorsx = Archive.none
+      @archives = Archive.none
+      @authorsx = Author.none
       @authors = Author.all.with_attached_image
     end
   end
 
   def show
     @author = Author.includes(:archives).find(params[:id])
-    all_tags = Gutentag::Tagging.where(taggable_type: 'Archive', taggable_id: @author.archives.ids).group(:tag_id).pluck(:tag_id)
-    @all_names = Gutentag::Tag.where(id: all_tags).pluck(:name)
+    @all_names = Author.tag_counts_on(:tags).pluck(:name)
   end
 
   def run
@@ -28,9 +29,4 @@ class AuthorsController < ApplicationController
     end
   end
   private
-
-  def get_tags(type)
-    all_tags = Gutentag::Tagging.where(taggable_type: type).group(:tag_id).pluck(:tag_id)
-    Gutentag::Tag.where(id: all_tags).pluck(:name)
-  end
 end

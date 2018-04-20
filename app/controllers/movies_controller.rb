@@ -1,9 +1,8 @@
 class MoviesController < ApplicationController
   def index
-    all_tags = Gutentag::Tagging.where(taggable_type: 'Movie').group(:tag_id).pluck(:tag_id)
-    @all_names = Gutentag::Tag.where(id: all_tags).pluck(:name)
+    @all_names = Movie.tag_counts_on(:tags).pluck(:name)
     if params[:tag_name]
-      @movies = Movie.tagged_with(names: params[:tag_name], :match => :any).with_attached_image
+      @movies = Movie.tagged_with(params[:tag_name], any: true).with_attached_image
     else
       @movies = Movie.all.with_attached_image
     end

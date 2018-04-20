@@ -16,7 +16,7 @@
   <% @all_names.each do |t| %>
     <%= link_to authors_path(tag_name: t), class: "badge badge-primary" do %>
       <i class="fas fa-tag"></i> <%= t %>
-    <% end%>
+    <% end %>
   <% end %>
 </div>
 
@@ -24,33 +24,37 @@
   <% @all_item_names.each do |t| %>
     <%= link_to authors_path(tag_name: t), class: "badge badge-primary" do %>
       <i class="fas fa-tag"></i> <%= t %>
-    <% end%>
-  <% end %>
-</div>
-
-<div class="list">
-  <% @authorsx.each do |author|
-    begin
-      Dir.chdir("#{AUTHOR_DIR}/#{author.dir_name}")
-    rescue => ex
-      Dir.chdir(AUTHOR_DIR)
-    end
-
-    unless Dir.pwd == AUTHOR_DIR %>
-      <%= link_to author do %>
-        <div class="item">
-          <div class="name">
-            <%= author.name %>
-          </div>
-          <div class="image">
-            <%= image_tag author.image.variant(resize: "140x198!") if author.image.attached? %>
-          </div>
-        </div>
-      <% end %>
     <% end %>
   <% end %>
 </div>
 
+a
+<div class="list">
+  <% @authorsx.each do |author|
+    cache ["list", author] do
+
+      begin
+        Dir.chdir("#{AUTHOR_DIR}/#{author.dir_name}")
+      rescue => ex
+        Dir.chdir(AUTHOR_DIR)
+      end
+
+      unless Dir.pwd == AUTHOR_DIR %>
+        <%= link_to author do %>
+          <div class="item">
+            <div class="name">
+              <%= author.name %>
+            </div>
+            <div class="image">
+              <%= image_tag author.image.variant(resize: "140x198!") if author.image.attached? %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end  if @abc%>
+</div>
+b
 <div class="list">
   <% @authors.each do |author|
     begin
@@ -72,4 +76,35 @@
       <% end %>
     <% end %>
   <% end %>
+</div>
+
+<div class="file-list">
+  <% @archives.each do |item| %>
+    <div class="row">
+      <div class="name col-2">
+        <%= item.owner.name %>
+      </div>
+      <div class="file col-10">
+        <%= link_to "執行", run_author_path(id: item.owner.id, file: item.name), remote: true, class: "btn btn-primary btn-sm" %>
+        <div class="rating show" data-rating='<%= item.rating || 0 %>' id="rating-">
+          <% [1,3,5,7,9].each do |star| %>
+            <div class="star">
+              <%= link_to '#', remote: true do %>
+                <div class="star-left <%= 'hover' if item.rating &.>= star %>" data-star='<%= star %>'></div>
+              <% end %>
+              <%= link_to '#',remote: true do %>
+                <div class="star-right <%= 'hover' if item.rating &.>= star + 1 %>" data-star='<%= star + 1 %>'></div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+        <%= item.name %>
+        <% item.tag_names.each do |x| %>
+          <%= link_to authors_path(tag_name: x), class: "badge badge-primary" do %>
+            <i class="fas fa-tag"></i> <%= x %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end if @abc%>
 </div>

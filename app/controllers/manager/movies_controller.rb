@@ -2,10 +2,9 @@ class Manager::MoviesController < Manager::ManagerController
   before_action :set_movie, only: [:show, :edit, :update, :destroy, :remove]
 
   def index
-    all_tags = Gutentag::Tagging.where(taggable_type: 'Movie').group(:tag_id).pluck(:tag_id)
-    @all_names = Gutentag::Tag.where(id: all_tags).pluck(:name)
+    @all_names = Movie.tag_counts_on(:tags).pluck(:name)
     if params[:tag_name]
-      @movies = Movie.tagged_with(names: params[:tag_name], :match => :any).with_attached_image
+      @movies = Movie.tagged_with(params[:tag_name], any: true).with_attached_image
     else
       @movies = Movie.all.with_attached_image
     end
@@ -15,14 +14,16 @@ class Manager::MoviesController < Manager::ManagerController
   end
 
   def new
+    @all_names = ActsAsTaggableOn::Tag.all
     @movie = Movie.new
   end
 
   def edit
+    @all_names = ActsAsTaggableOn::Tag.all
   end
 
   def create
-    tag_split
+    # tag_split
     @movie = Movie.new(movie_params)
     if @movie.save
       redirect_to @movie, notice: "#{@movie.name}已新增"
@@ -39,7 +40,6 @@ class Manager::MoviesController < Manager::ManagerController
   end
 
   def update
-    tag_split
     if @movie.update(movie_params)
       redirect_to @movie, notice: "#{@movie.name}已更新"
     else
@@ -59,16 +59,5 @@ class Manager::MoviesController < Manager::ManagerController
 
   def movie_params
     params.require(:movie).permit(:name, :dir_name, :image, tag_names: [])
-  end
-
-  def tag_split
-    params[:movie][:tag_names] = params[:movie][:tag_names][0].split(' ') if params[:movie][:tag_names].any?
-  end
-
-  def tag_update
-    # tags = Gutentag::Tag.all.pluck(:name)
-    # params[:movie][:tag_names].each do |tag|
-    #   Gutentag::Tag.new(name: tag).save unless tags.include? tag
-    # end
   end
 end

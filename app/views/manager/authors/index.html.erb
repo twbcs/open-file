@@ -17,7 +17,7 @@
     <%= link_to manager_authors_path(tag_name: t), class: "badge badge-primary" do %>
       <i class="fas fa-tag"></i> <%= t %>
     <% end%>
-  <% end %>
+  <% end if @abc %>
 </div>
 
 <div class='tag_list'>
@@ -25,7 +25,7 @@
     <%= link_to manager_authors_path(tag_name: t), class: "badge badge-primary" do %>
       <i class="fas fa-tag"></i> <%= t %>
     <% end%>
-  <% end %>
+  <% end if @abc %>
 </div>
 
 <table class="table">

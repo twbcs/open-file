@@ -2,10 +2,11 @@ class Manager::AuthorsController < Manager::ManagerController
   before_action :set_author, only: [:edit, :update, :destroy, :remove]
 
   def index
-    @all_names = get_tags('Author')
-    @all_item_names = get_tags('Archive')
+    @all_names = Author.tag_counts_on(:tags).pluck(:name)
+    @all_item_names = Archive.tag_counts_on(:tags).pluck(:name)
+
     if params[:tag_name]
-      @authors = Author.tagged_with(names: params[:tag_name], match: :any).with_attached_image
+      @authors = Author.tagged_with(params[:tag_name], any: true).with_attached_image
     else
       @authors = Author.all.with_attached_image
     end
@@ -13,21 +14,22 @@ class Manager::AuthorsController < Manager::ManagerController
 
   def show
     @author = Author.includes(:archives).find(params[:id])
-    all_tags = Gutentag::Tagging.where(taggable_type: 'Archive', taggable_id: @author.archives.ids).group(:tag_id).pluck(:tag_id)
-    @all_names = Gutentag::Tag.where(id: all_tags).pluck(:name)
+    @all_names = Author.tag_counts_on(:tags).pluck(:name)
   end
 
   def new
+    @all_names = ActsAsTaggableOn::Tag.all
     @author = Author.new
   end
 
   def edit
+    @all_names = ActsAsTaggableOn::Tag.all
   end
 
   def create
-    tag_split
     @author = Author.new(author_params)
     if @author.save
+      Rails.cache.delete('Author')
       redirect_to @author, notice: "#{@author.name}已新增"
     else
       render :new
@@ -42,8 +44,9 @@ class Manager::AuthorsController < Manager::ManagerController
   end
 
   def update
-    tag_split
+    set_tags(@author, author_params)
     if @author.update(author_params)
+      Rails.cache.delete('Author')
       redirect_to @author, notice: "#{@author.name}已更新"
     else
       render :edit
@@ -52,6 +55,7 @@ class Manager::AuthorsController < Manager::ManagerController
 
   def destroy
     @author.destroy
+    Rails.cache.delete('Author')
     redirect_to authors_url, notice: "#{@author.name}已刪除"
   end
 
@@ -61,22 +65,6 @@ class Manager::AuthorsController < Manager::ManagerController
   end
 
   def author_params
-    params.require(:author).permit(:name, :dir_name, :image, tag_names: [])
-  end
-
-  def tag_split
-    params[:author][:tag_names] = params[:author][:tag_names][0].split(' ') if params[:author][:tag_names].any?
-  end
-
-  def get_tags(type)
-    all_tags = Gutentag::Tagging.where(taggable_type: type).group(:tag_id).pluck(:tag_id)
-    Gutentag::Tag.where(id: all_tags).pluck(:name)
-  end
-
-  def tag_update
-    # tags = Gutentag::Tag.all.pluck(:name)
-    # params[:author][:tag_names].each do |tag|
-    #   Gutentag::Tag.new(name: tag).save unless tags.include? tag
-    # end
+    params.require(:author).permit(:name, :dir_name, :image, tag_list: [])
   end
 end

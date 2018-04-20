@@ -23,10 +23,10 @@
 
   <div class="field">
     <%= form.label :tag_names %>
-    <%= form.text_field :tag_names, name: 'movie[tag_names][]', value: movie.tag_names, class: 'form-control' %>
+    <%= form.text_field :tag_names, name: 'movie[tag_names][]', value: movie.tag_names, class: 'form-control', id: 'form_tag_names' %>
   </div>
   <div class='tag_list'>
-    <% Gutentag::Tag.all.each do |t| %>
+    <% @all_names.each do |t| %>
       <% unless movie.tag_names.include? t.name %>
         <span class="tag active badge badge-primary"><%= t.name %></span>
       <% end %>
