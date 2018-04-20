@@ -47,7 +47,7 @@
     end
 
     unless Dir.pwd == AUTHOR_DIR %>
-      <% Dir.children(Dir.pwd).each_with_index do |file, index| %>
+      <% Dir.children(Dir.pwd).sort.each_with_index do |file, index| %>
         <% if file[0] != '.' %>
           <div class="file" id='file_<%= index%>'>
             <%= link_to "執行", run_author_path(id: @author.id, file: file), remote: true, class: "btn btn-primary btn-sm" %>

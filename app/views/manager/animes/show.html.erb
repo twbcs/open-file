@@ -38,7 +38,7 @@ rescue => ex
 end
 
 unless Dir.pwd == ANIME_DIR %>
-  <% Dir.children(Dir.pwd).each_with_index do |file, index| %>
+  <% Dir.children(Dir.pwd).sort.each_with_index do |file, index| %>
     <% if File.extname(file).in?(['.mp4', '.mkv', '.avi']) && file[0] != '.' %>
       <div class="file">
         <%= link_to "執行", run_anime_path(id: @anime.id, file: file), remote: true, class: "btn btn-primary btn-sm" %>
