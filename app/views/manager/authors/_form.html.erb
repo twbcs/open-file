@@ -1,4 +1,3 @@
-<%= form_with(model: [:manager, author], local: true) do |form| %>
   <% if author.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(author.errors.count, "error") %> prohibited this author from being saved:</h2>
@@ -25,14 +24,14 @@
     <%= form.label :tag_list %>
     <%= form.text_field :tag_list, name: 'author[tag_list][]', value: author.tag_list, class: 'form-control', id: 'form_tag_names' %>
   </div>
-  <%= render 'shared/form_tag', all_names: @all_names, model: author %>
+  <%= render 'shared/form_tag', all_names: all_names, model: author %>
 
   <div class="field">
     <% if author.image.attached? %>
       <%= link_to remove_manager_author_path(author), class: "btn btn-primary" do %>
         <i class="fas fa-trash-alt"></i> 移除檔案
       <% end%>
-      <%= image_tag @author.image.variant(resize: "200x400") %><br>
+      <%= image_tag author.image.variant(resize: "200x400") %><br>
     <% end %>
     <%= form.file_field :image %>
   </div>
@@ -41,4 +40,3 @@
     <%= form.submit nil, class: "btn btn-primary" %>
   </div>
   <br>
-<% end %>

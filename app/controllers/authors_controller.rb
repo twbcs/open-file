@@ -18,6 +18,10 @@ class AuthorsController < ApplicationController
   def show
     @author = Author.includes(:archives).find(params[:id])
     @all_names = Author.cache_tags
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def run

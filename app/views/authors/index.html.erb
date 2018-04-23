@@ -24,14 +24,14 @@ a
   <% end %>
 </div>
 b
-<div class="list">
+<div class="list" id="authors">
   <% @authors.each do |author|
     cache ["list", author] do
       set_dir(AUTHOR_DIR, author)
 
       unless Dir.pwd == AUTHOR_DIR %>
-        <%= link_to author do %>
-          <div class="item">
+        <%= link_to author, remote: true do %>
+          <div class="item" id="author_<%=author.id%>">
             <div class="name">
               <%= author.name %>
             </div>
@@ -74,4 +74,8 @@ b
       </div>
     </div>
   <% end%>
+</div>
+
+<div id="area" class="hidden">
+
 </div>

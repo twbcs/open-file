@@ -1,0 +1,15 @@
+$('#area').removeClass('hidden').html("<%=j render 'new', author: @author, all_names: @all_names %>");
+
+$('.tag_list .tag.active').click(function() {
+  if ($(this).hasClass('active')) {
+    var tag = $(this).html();
+    var tags = $('#form_tag_names').val();
+    $('#form_tag_names').val(tags + ' ' + tag);
+    $(this).removeClass('active').removeClass('badge-primary').addClass('badge-secondary');
+  }
+});
+
+location.href="#area";
+$('.index-times').click(function() {
+  $('#area').addClass('hidden');
+});

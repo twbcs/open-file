@@ -1,6 +1,8 @@
 <h1>新增<%= url_name(params[:controller].split('/').last) %></h1>
 
-<%= render 'form', author: @author %>
+<%= form_with(model: [:manager, author], local: true) do |form| %>
+  <%= render 'form', form: form, author: @author, all_names: @all_names %>
+<% end %>
 
 <%= link_to manager_authors_path, class: "btn btn-primary" do %>
   <i class="fas fa-long-arrow-alt-left"></i> 返回

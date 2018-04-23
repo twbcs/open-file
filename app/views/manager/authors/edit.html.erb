@@ -1,6 +1,8 @@
 <h1>修改<%= url_name(params[:controller].split('/').last) %></h1>
 
-<%= render 'form', author: @author %>
+<%= form_with(model: [:manager, author], local: true) do |form| %>
+  <%= render 'form', form: form, author: @author, all_names: @all_names %>
+<% end %>
 
 <%= link_to manager_author_path(@author), class: "btn btn-primary" do %>
   <i class="fas fa-eye"></i> 檢視

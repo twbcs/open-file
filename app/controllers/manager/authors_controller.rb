@@ -15,6 +15,10 @@ class Manager::AuthorsController < Manager::ManagerController
   def show
     @author = Author.includes(:archives).find(params[:id])
     @all_names = Author.tag_counts_on(:tags).pluck(:name)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new
@@ -24,13 +28,21 @@ class Manager::AuthorsController < Manager::ManagerController
 
   def edit
     @all_names = ActsAsTaggableOn::Tag.all
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def create
     @author = Author.new(author_params)
     if @author.save
       Rails.cache.delete('author_tags')
-      redirect_to @author, notice: "#{@author.name}已新增"
+      @all_names = Author.tag_counts_on(:tags).pluck(:name)
+      respond_to do |format|
+        format.html {redirect_to @author, notice: "#{@author.name}已新增"}
+        format.js
+      end
     else
       render :new
     end
@@ -47,7 +59,11 @@ class Manager::AuthorsController < Manager::ManagerController
     set_tags(@author, author_params)
     if @author.update(author_params)
       Rails.cache.delete('author_tags')
-      redirect_to @author, notice: "#{@author.name}已更新"
+      @all_names = Author.tag_counts_on(:tags).pluck(:name)
+      respond_to do |format|
+        format.html {redirect_to @author, notice: "#{@author.name}已更新"}
+        format.js
+      end
     else
       render :edit
     end
