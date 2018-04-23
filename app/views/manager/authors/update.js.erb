@@ -1,0 +1,9 @@
+$('#area').removeClass('hidden').html("<%=j render 'show', author: @author, all_names: @all_names %>");
+
+$('#author_<%= @author.id%>').remove();
+$('#authors').append("<%=j render 'item', author: @author %>");
+
+location.href="#area";
+$('.index-times').click(function() {
+  $('#area').addClass('hidden');
+});

@@ -13,18 +13,48 @@
  *= require_tree .
  *= require_self
  */
- @import "bootstrap";
- @import "font-awesome-sprockets";
- @import "font-awesome";
+@import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+@media (min-width: 992px) {
+  .container {
+    #area {
+      .row {
+        width: 942px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    #area {
+      .row {
+        width: 1125px;
+      }
+    }
+  }
+}
 
 @media (min-width: 1500px) {
   .container {
-      max-width: 1290px;
+    max-width: 1290px;
+    #area {
+      .row {
+        width: 1272px;
+      }
+    }
   }
 }
 @media (min-width: 1900px) {
   .container {
     max-width: 1600px;
+    #area {
+      .row {
+        width: 1585px;
+      }
+    }
   }
 }
 
@@ -48,4 +78,22 @@ a:hover {
 
 .right {
   float: right;
+}
+
+#area {
+  background-color: #e0fff9eb;
+  margin-top: .5rem;
+  padding: .5rem;
+  border-radius: .5rem;
+  margin-bottom: .5rem;
+  position: absolute;
+  z-index: 5;
+  top: 35px;
+}
+
+.index-times {
+  top: 10px;
+  position: absolute;
+  right: 10px;
+  z-index: 5;
 }

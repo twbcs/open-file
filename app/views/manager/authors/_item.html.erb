@@ -1,0 +1,16 @@
+<% cache ["list", author] do
+  set_dir(AUTHOR_DIR, author)
+
+  unless Dir.pwd == AUTHOR_DIR %>
+    <%= link_to author, remote: true do %>
+      <div class="item" id="author_<%=author.id%>">
+        <div class="name">
+          <%= author.name %>
+        </div>
+        <div class="image">
+          <%= image_tag author.image.variant(resize: "140x198!") if author.image.attached? %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

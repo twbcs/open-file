@@ -1,6 +1,6 @@
 <div class="mb-2 pt-1">
   <% unless current_page?(action: :new) %>
-    <%= link_to url_for([:new, :manager, params[:controller].split('/').last.singularize]), class: "btn btn-primary btn-sm" do %>
+    <%= link_to url_for([:new, :manager, params[:controller].split('/').last.singularize]), remote: true, class: "btn btn-primary btn-sm" do %>
       <i class="fas fa-plus"></i> 新<%= url_name(params[:controller].split('/').last) %>
     <% end %>
   <% end %>
