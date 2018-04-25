@@ -13,6 +13,10 @@ class AuthorsController < ApplicationController
       @authorsx = Author.none
       @authors = Author.all.with_attached_image
     end
+    respond_to do |format|
+      format.html
+      format.json
+    end
   end
 
   def show

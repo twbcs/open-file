@@ -6,10 +6,18 @@ class AnimesController < ApplicationController
     else
       @animes = Anime.all.with_attached_image
     end
+    respond_to do |format|
+      format.html
+      format.json
+    end
   end
 
   def show
     @anime = Anime.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def run
