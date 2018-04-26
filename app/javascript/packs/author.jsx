@@ -5,8 +5,12 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import Item from './Item'
+import App from './App'
+
+
+
 
 document.addEventListener('turbolinks:load', () => {
-  ReactDOM.render(<Item target={'authors'}/>, document.getElementById('root'))
+  ReactDOM.render(
+    <App/>, document.getElementById('root'))
 })
