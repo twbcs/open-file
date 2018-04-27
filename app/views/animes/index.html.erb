@@ -1,5 +1,5 @@
 
-<%= render 'shared/show_tag', items: @all_names %>
+<%= render 'shared/show_tag', items: @all_names || [] %>
 
 <div class="list">
   <% @animes.each do |anime|

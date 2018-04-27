@@ -1,0 +1,6 @@
+$('#area').removeClass('hidden').html("<%=j render 'show', movie: @movie, all_names: @all_names %>");
+
+location.href="#area";
+$('.index-times').click(function() {
+  $('#area').addClass('hidden');
+});

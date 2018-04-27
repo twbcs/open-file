@@ -14,9 +14,11 @@ class AnimesController < ApplicationController
 
   def show
     @anime = Anime.find(params[:id])
+    @all_names = Anime.cache_tags
     respond_to do |format|
       format.html
       format.js
+      format.json
     end
   end
 

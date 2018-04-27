@@ -8,7 +8,7 @@ unless Dir.pwd == AUTHOR_DIR
   Dir.children(Dir.pwd).sort.each_with_index do |file, idx|
     index = idx - 1
     if file[0] != '.'
-      files << {name: '', rating: '', tag_list: []}
+      files << {name: '', rating: nil, tag_list: []}
       files[index][:name] = file
       if @author.archives.any?
         @author.archives.each do |archive|

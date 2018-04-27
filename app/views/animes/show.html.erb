@@ -14,8 +14,8 @@
       <% end%>
     </p>
 
-    <%= render 'shared/show_tag', items: @anime.tag_list %>
-    <%= render 'shared/show_tag', items: @all_names %>
+    <%= render 'shared/show_tag', items: @anime.tag_list || [] %>
+    <%= render 'shared/show_tag', items: @all_names || [] %>
 
     <div class="image mb-2">
       <%= image_tag @anime.image.variant(resize: "400x800")  if @anime.image.attached? %>

@@ -19,7 +19,7 @@ export default class App extends Component {
 
   componentDidMount() {
     (async () => {
-      const data = await fetch(`http://localhost:3000/authors.json`, {
+      const data = await fetch(`/${this.props.target}.json`, {
         method: 'GET', headers: {
           'Accept': 'application/json'
         }
@@ -29,6 +29,10 @@ export default class App extends Component {
     })()
   }
 
+  componentWillUnmount() {
+    this.setState({ list: [], select: null })
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -36,7 +40,7 @@ export default class App extends Component {
         <ItemList {...this.state} handleClick={(e) => this.handleClick(e)} />
       </div>
 
-        { this.state.select !== null ? <Show select={this.state.list[this.state.select].id} onClick={(e) => this.handleClick(e)}/> : null}
+        { this.state.select !== null ? <Show select={this.state.list[this.state.select].id} target={this.props.target} onClick={(e) => this.handleClick(e)}/> : null}
       </React.Fragment>
     )
   }

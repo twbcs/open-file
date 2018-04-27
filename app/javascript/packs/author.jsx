@@ -12,5 +12,5 @@ import App from './App'
 
 document.addEventListener('turbolinks:load', () => {
   ReactDOM.render(
-    <App/>, document.getElementById('root'))
+    <App target={'authors'}/>, document.getElementById('root'))
 })
