@@ -75,6 +75,12 @@ class Manager::AuthorsController < Manager::ManagerController
     redirect_to authors_url, notice: "#{@author.name}已刪除"
   end
 
+  def rating
+    author = Author.find(params[:id])
+    author.update_column(:rating, params[:rating])
+    render json: author
+  end
+
   private
   def set_author
     @author = Author.find(params[:id])

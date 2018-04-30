@@ -13,6 +13,7 @@
         <i class="fas fa-edit"></i> 管理
       <% end%>
     </p>
+    <%= render 'shared/rating', item: author, index: nil %>
 
     <%= render 'shared/show_tag', items: author.tag_list %>
     <%= render 'shared/show_tag', items: all_names %>
@@ -35,18 +36,7 @@
               <% author.archives.each do |archive|%>
                 <% if file == archive.name
                   exist = true %>
-                  <div class="rating show" data-rating='<%= archive.rating || 0 %>' id="rating-<%= index %>">
-                    <% [1,3,5,7,9].each do |star| %>
-                      <div class="star">
-                        <%= link_to '#', remote: true do %>
-                          <div class="star-left <%= 'hover' if archive.rating && archive.rating >= star %>" data-star='<%= star %>'></div>
-                        <% end %>
-                        <%= link_to '#',remote: true do %>
-                          <div class="star-right <%= 'hover' if archive.rating && archive.rating >= star + 1 %>" data-star='<%= star + 1 %>'></div>
-                        <% end %>
-                      </div>
-                    <% end %>
-                  </div>
+                  <%= render 'shared/rating', item: archive, index: index %>
                   <%= file %>
                   <% archive.tag_list.each do |x| %>
                     <%= link_to authors_path(tag_name: x), class: "badge badge-primary" do %>

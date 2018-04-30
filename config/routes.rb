@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
     resources :authors do
       get :remove, on: :member
+      get :rating, on: :member
       get :search, on: :collection
       resources :archives, only: [:edit, :update, :create, :new] do
         get :rating, on: :member

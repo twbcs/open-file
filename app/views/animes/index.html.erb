@@ -6,7 +6,7 @@
     set_dir(ANIME_DIR, anime)
 
     unless Dir.pwd == ANIME_DIR %>
-      <%= link_to anime do %>
+      <%= link_to anime, remote: true do %>
         <div class="item">
           <div class="name">
             <%= anime.name %>

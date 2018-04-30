@@ -6,7 +6,7 @@
     set_dir(MOVIE_DIR, movie)
 
     unless Dir.pwd == MOVIE_DIR %>
-      <%= link_to movie do %>
+      <%= link_to movie, remote: true do %>
         <div class="item">
           <div class="name">
             <%= movie.name %>

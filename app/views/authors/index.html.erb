@@ -9,7 +9,7 @@ a
       set_dir(AUTHOR_DIR, author)
 
       unless Dir.pwd == AUTHOR_DIR %>
-        <%= link_to author do %>
+        <%= link_to author, remote: true do %>
           <div class="item">
             <div class="name">
               <%= author.name %>

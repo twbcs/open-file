@@ -1,3 +1,4 @@
+<i class="fas fa-times index-times"></i>
 <div class="row">
   <div class="col-lg-5 col-xl-5">
     <p class="mt-2">
@@ -9,6 +10,7 @@
         <i class="fas fa-edit"></i> 修改
       <% end%>
     </p>
+    <%= render 'shared/rating', item: anime, index: nil %>
 
     <%= render 'shared/show_tag', items: @anime.tag_list %>
     <%= render 'shared/show_tag', items: @all_names || []%>

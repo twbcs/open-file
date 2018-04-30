@@ -9,6 +9,7 @@ export default class Show extends Component {
     tag_list: [],
     image: '',
     files: [],
+    rating: null,
     all_tag_list: [],
   }
 
@@ -22,7 +23,7 @@ export default class Show extends Component {
       console.log(data)
       this.setState({
         id: data.id, name: data.name, dir_name: data.dir_name, all_tag_list: data.all_tag_list,
-        files: data.files, tag_list: data.tag_list, image: data.image })
+        files: data.files, tag_list: data.tag_list, image: data.image, rating: data.rating })
     })()
   }
 
@@ -37,7 +38,7 @@ export default class Show extends Component {
         console.log(data)
         this.setState({
           id: data.id, name: data.name, dir_name: data.dir_name, all_tag_list: data.all_tag_list,
-          files: data.files, tag_list: data.tag_list, image: data.image })
+          files: data.files, tag_list: data.tag_list, image: data.image, rating: data.rating })
       })()
     }
   }
@@ -104,6 +105,10 @@ export default class Show extends Component {
             <a className="btn btn-primary btn-sm ml-1" data-remote="true" href={`/manager/${this.props.target}/${this.state.id}`}>
               <i className="fas fa-edit"></i> 管理
             </a>
+            <br/>
+            <div className="rating show ml-1" data-rating={this.state.rating} id={`rating-item`}>
+              {this.renderRating(this.state.rating)}
+            </div>
             <div className='tag_list'>
               {this.state.tag_list != [] ? this.renderTag(this.state.tag_list) : null}
             </div>

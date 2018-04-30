@@ -1,4 +1,4 @@
-json.extract! @author, :id, :name, :dir_name, :tag_list
+json.extract! @author, :id, :name, :dir_name, :tag_list, :rating
 json.image @author.image.attached? ? url_for(@author.image.variant(resize: "400x800")) : ''
 
 
