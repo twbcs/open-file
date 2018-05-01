@@ -9,7 +9,7 @@
       <%= link_to anime, remote: true do %>
         <div class="item">
           <div class="name">
-            <%= anime.name %>
+            <%= anime.name %> (<%= anime.file_count %>)
           </div>
           <div class="image">
             <%= image_tag anime.image.variant(resize: "140x198!") if anime.image.attached? %>

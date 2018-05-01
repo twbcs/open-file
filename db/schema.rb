@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 2018_04_28_224602) do
-=======
 ActiveRecord::Schema.define(version: 2018_04_30_013200) do
->>>>>>> af381b6078ab7cc824ce0e983dbd41e0c4a1c8a0
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -52,11 +48,8 @@ ActiveRecord::Schema.define(version: 2018_04_30_013200) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "type"
-<<<<<<< HEAD
     t.integer "file_count", default: 0
-=======
     t.integer "rating", default: 0
->>>>>>> af381b6078ab7cc824ce0e983dbd41e0c4a1c8a0
   end
 
   create_table "taggings", force: :cascade do |t|
