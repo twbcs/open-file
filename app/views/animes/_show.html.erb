@@ -22,6 +22,10 @@
     <% set_dir(ANIME_DIR, @anime)
 
     unless Dir.pwd == ANIME_DIR %>
+    <% if  @author.file_count != Dir.children(Dir.pwd).size
+      @author.file_count = Dir.children(Dir.pwd).size
+      @author.save
+    end %>
       <% Dir.children(Dir.pwd).sort.each_with_index do |file, index| %>
         <% if File.extname(file).in?(['.mp4', '.mkv', '.avi']) && file[0] != '.' %>
           <div class="file">

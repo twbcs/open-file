@@ -24,7 +24,7 @@ export default class Item extends Component {
     return (
       <div onClick={this.onClick}>
         <div className='item' >
-          <div className='name'>名稱: {this.props.item.name}</div>
+          <div className='name'>名稱: {this.props.item.name} ({this.props.item.file_count})</div>
           <div className='image'>
             {this.imageLink(this.props.item.image)}
           </div>

@@ -33,7 +33,7 @@ b
         <%= link_to author, remote: true do %>
           <div class="item" id="author_<%=author.id%>">
             <div class="name">
-              <%= author.name %>
+              <%= author.name %> (<%= author.file_count %>)
             </div>
             <div class="image">
               <%= image_tag author.image.variant(resize: "140x198!") if author.image.attached? %>

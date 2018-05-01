@@ -29,6 +29,10 @@
     <% set_dir(AUTHOR_DIR, @author)
 
     unless Dir.pwd == AUTHOR_DIR %>
+      <% if  @author.file_count != Dir.children(Dir.pwd).size
+        @author.file_count = Dir.children(Dir.pwd).size
+        @author.save
+      end %>
       <% Dir.children(Dir.pwd).sort.each_with_index do |file, index| %>
         <% if file[0] != '.' %>
           <div class="file" id='file_<%= index%>'>
