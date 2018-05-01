@@ -16,6 +16,19 @@
       <%= author.dir_name %>
     </p>
 
+    <div class="rating" data-rating='<%= author.rating || 0 %>' id="rating-author">
+      <% [1,3,5,7,9].each do |star| %>
+        <div class="star">
+          <%= link_to rating_manager_author_path(author_id: author.id, rating: star), remote: true do %>
+            <div class="star-left <%= 'hover' if author.rating &.>= star %>" data-star='<%= star %>'></div>
+          <% end %>
+          <%= link_to rating_manager_author_path(author_id: author.id, rating: star + 1),remote: true do %>
+            <div class="star-right <%= 'hover' if author.rating &.>= star + 1 %>" data-star='<%= star + 1 %>'></div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
     <%= render 'shared/show_tag', items: author.tag_list || [] %>
 
     <%= render 'shared/show_tag', items: all_names || [] %>
