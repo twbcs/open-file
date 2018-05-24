@@ -19,7 +19,7 @@
     <%= render 'shared/show_tag', items: all_names %>
 
     <div class="image mb-2">
-      <%= image_tag author.image.variant(resize: "400x800")  if author.image.attached? %>
+      <%= image_tag author.image.variant(resize: "400x800").processed  if author.image.attached? %>
     </div>
   </div>
 
